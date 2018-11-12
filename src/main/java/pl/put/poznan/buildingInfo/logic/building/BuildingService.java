@@ -9,12 +9,20 @@ import pl.put.poznan.buildingInfo.logic.BuildingRepository;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
+/**
+ * This class is a service for building operations
+ */
 @Component
 public class BuildingService {
 
   @Autowired
   BuildingRepository buildingRepository;
 
+  /**
+   * Get area of the building with given id
+   * @param id id of the building
+   * @return area of the building
+   */
   public Float calculateBuildingArea(Integer id) {
 
     Building buildings[] = buildingRepository.getBuildingInfo().getBuildings();
@@ -26,6 +34,12 @@ public class BuildingService {
             .reduce((float) 0, Float::sum);
   }
 
+  /**
+   * Get building object if exists
+   * @param id id of the building
+   * @param buildings array of buildings
+   * @return building object
+   */
   private Stream<Building> findBuilding(Integer id, Building[] buildings) {
     return Arrays.stream(buildings)
             .filter(b -> b.getId().equals(id));

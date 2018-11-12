@@ -10,12 +10,20 @@ import pl.put.poznan.buildingInfo.model.building.floor.room.Room;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
+/**
+ * This class is a service for floor operations
+ */
 @Component
 public class FloorService {
 
   @Autowired
   BuildingRepository buildingRepository;
 
+  /**
+   * Get area of the whole floor with given id
+   * @param id id of the floor
+   * @return area of the floor
+   */
   public Float calculateFloorArea(Integer id) {
 
     Stream<Floor> room = findFloor(id);
@@ -24,6 +32,11 @@ public class FloorService {
             .reduce((float) 0, Float::sum);
   }
 
+  /**
+   * Get floor object if exists
+   * @param id id of the floor
+   * @return floor object
+   */
   private Stream<Floor> findFloor(Integer id) {
 
     Building[] buildings = buildingRepository.getBuildingInfo().getBuildings();
