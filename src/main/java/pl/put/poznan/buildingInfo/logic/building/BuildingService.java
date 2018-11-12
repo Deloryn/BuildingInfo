@@ -50,6 +50,21 @@ public class BuildingService {
   }
 
   /**
+   * Calculate heating energy cost for the whole building with given id
+   * @param id id of the building
+   * @return heating energy cost of the building
+   */
+  public Float calculateBuildingHeating(Integer id) {
+    Building buildings[] = buildingRepository.getBuildingInfo().getBuildings();
+    Stream<Building> building = findBuilding(id, buildings);
+    return building
+            .flatMap(b -> Arrays.stream(b.getFloors()))
+            .flatMap(f -> Arrays.stream(f.getRooms()))
+            .map(Room::getHeating)
+            .reduce((float) 0, Float::sum);
+  }
+
+  /**
    * Get building object if exists
    * @param id id of the building
    * @param buildings array of buildings

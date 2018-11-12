@@ -40,6 +40,16 @@ public class RoomService {
   }
 
   /**
+   * Get heating energy cost of the room with given id
+   * @param id id of the room
+   * @return heating energy cost of the room
+   */
+  public Optional<Float> getRoomHeating(Integer id) {
+    Optional<Room> room = findRoom(id);
+    return room.map(Room::getHeating);
+  }
+
+  /**
    * Get room object if exists
    * @param id id of the room
    * @return room object

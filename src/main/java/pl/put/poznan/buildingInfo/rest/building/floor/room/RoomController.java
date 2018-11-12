@@ -55,4 +55,21 @@ public class RoomController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
+
+  @RequestMapping("/heating/{roomId}")
+  public ResponseEntity<Float> getRoomHeating(@PathVariable Integer roomId) {
+
+    logger.debug(roomId.toString());
+    logger.info("Get room heating. Room id: ", roomId);
+
+    Optional<Float> roomHeating = roomService.getRoomHeating(roomId);
+
+    if(roomHeating.isPresent()){
+      return new ResponseEntity<>(roomHeating.get(), HttpStatus.OK);
+    }
+    else {
+      logger.info("room with given id does not exist. Returning not found");
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
 }
