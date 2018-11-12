@@ -30,6 +30,16 @@ public class RoomService {
   }
 
   /**
+   * Get cube of the room with given id
+   * @param id id of the room
+   * @return cube of the room
+   */
+  public Optional<Float> getRoomCube(Integer id) {
+    Optional<Room> room = findRoom(id);
+    return room.map(Room::getCube);
+  }
+
+  /**
    * Get room object if exists
    * @param id id of the room
    * @return room object

@@ -33,8 +33,11 @@ public class BuildingController {
   @RequestMapping("/cube/{buildingId}")
   public ResponseEntity<Float> getBuildingCube(@PathVariable Integer buildingId) {
 
-    //TODO
-    return new ResponseEntity<>((float) 0, HttpStatus.OK);
+    logger.debug(buildingId.toString());
+    logger.info("Get building cube. Building id: ", buildingId.toString());
+
+    Float totalCube = buildingService.calculateBuildingCube(buildingId);
+    return new ResponseEntity<>(totalCube, HttpStatus.OK);
   }
 }
 

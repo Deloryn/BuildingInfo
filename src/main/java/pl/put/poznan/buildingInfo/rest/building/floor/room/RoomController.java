@@ -26,6 +26,7 @@ public class RoomController {
   public ResponseEntity<Float> getRoomArea(@PathVariable Integer roomId) {
 
     logger.debug(roomId.toString());
+    logger.info("Get room area. Room id: ", roomId);
 
     Optional<Float> roomArea = roomService.getRoomArea(roomId);
 
@@ -34,8 +35,24 @@ public class RoomController {
     }
     else {
       logger.info("room with given id does not exist. Returning not found");
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+  }
 
-    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+  @RequestMapping("/cube/{roomId}")
+  public ResponseEntity<Float> getRoomCube(@PathVariable Integer roomId) {
+
+    logger.debug(roomId.toString());
+    logger.info("Get room cube. Room id: ", roomId);
+
+    Optional<Float> roomCube = roomService.getRoomCube(roomId);
+
+    if(roomCube.isPresent()){
+      return new ResponseEntity<>(roomCube.get(), HttpStatus.OK);
+    }
+    else {
+      logger.info("room with given id does not exist. Returning not found");
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
   }
 }

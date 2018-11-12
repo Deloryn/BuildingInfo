@@ -35,6 +35,21 @@ public class BuildingService {
   }
 
   /**
+   * Get cube of the building with given id
+   * @param id id of the building
+   * @return cube of the building
+   */
+  public Float calculateBuildingCube(Integer id) {
+    Building buildings[] = buildingRepository.getBuildingInfo().getBuildings();
+    Stream<Building> building = findBuilding(id, buildings);
+    return building
+            .flatMap(b -> Arrays.stream(b.getFloors()))
+            .flatMap(f -> Arrays.stream(f.getRooms()))
+            .map(Room::getCube)
+            .reduce((float) 0, Float::sum);
+  }
+
+  /**
    * Get building object if exists
    * @param id id of the building
    * @param buildings array of buildings

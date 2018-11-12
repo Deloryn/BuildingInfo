@@ -28,4 +28,14 @@ public class FloorController {
     Float totalArea = floorService.calculateFloorArea(floorId);
     return new ResponseEntity<>(totalArea, HttpStatus.OK);
   }
+
+  @RequestMapping("/cube/{floorId}")
+  public ResponseEntity<Float> getFloorCube(@PathVariable Integer floorId) {
+
+    logger.debug(floorId.toString());
+    logger.info("Get floor cube. Floord id: ", floorId.toString());
+
+    Float totalCube = floorService.calculateFloorCube(floorId);
+    return new ResponseEntity<>(totalCube, HttpStatus.OK);
+  }
 }
