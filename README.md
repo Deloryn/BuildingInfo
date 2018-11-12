@@ -12,6 +12,3 @@ Struktura danych:
     - cube = kubatura pomieszczenia w m^3
     - heating = poziom zużycia energii ogrzewania (float)
     - light – łączna moc oświetlenia
-
-
-Temp change
