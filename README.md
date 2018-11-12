@@ -1,5 +1,5 @@
 # BuildingInfo
-![Build status](https://travis-ci.com/Deloryn/bildowanie.svg?branch=master)
+![Build status](https://travis-ci.org/Hound1997c/bildowanie.svg?branch=master)
 
 Struktura danych:
 - Lokacja to budynek, poziom, lub pomieszczenie
