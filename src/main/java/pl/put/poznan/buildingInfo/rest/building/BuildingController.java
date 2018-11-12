@@ -24,6 +24,7 @@ public class BuildingController {
   public ResponseEntity<Float> getBuildingArea(@PathVariable Integer buildingId) {
 
     logger.debug(buildingId.toString());
+    logger.info("Get building area. Building id: ", buildingId.toString());
 
     Float totalArea = buildingService.calculateBuildingArea(buildingId);
     return new ResponseEntity<>(totalArea, HttpStatus.OK);

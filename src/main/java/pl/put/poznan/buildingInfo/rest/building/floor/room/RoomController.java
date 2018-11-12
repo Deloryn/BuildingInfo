@@ -32,6 +32,9 @@ public class RoomController {
     if(roomArea.isPresent()){
       return new ResponseEntity<>(roomArea.get(), HttpStatus.OK);
     }
+    else {
+      logger.info("room with given id does not exist. Returning not found");
+    }
 
     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
   }

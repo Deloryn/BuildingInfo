@@ -23,6 +23,7 @@ public class FloorController {
   public ResponseEntity<Float> getFloorArea(@PathVariable Integer floorId) {
 
     logger.debug(floorId.toString());
+    logger.info("Get floor area. Floord id: ", floorId.toString());
 
     Float totalArea = floorService.calculateFloorArea(floorId);
     return new ResponseEntity<>(totalArea, HttpStatus.OK);
