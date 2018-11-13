@@ -40,13 +40,26 @@ public class RoomService {
   }
 
   /**
-   * Get heating energy cost of the room with given id
+   * Get heating energy of the room with given id
    * @param id id of the room
-   * @return heating energy cost of the room
+   * @return heating energy of the room
    */
   public Optional<Float> getRoomHeating(Integer id) {
     Optional<Room> room = findRoom(id);
     return room.map(Room::getHeating);
+  }
+
+  /**
+   * Get heating energy per cube in the room with given id
+   * @param id id of the room
+   * @return heating energy per cube in the room
+   */
+  public Optional<Float> getRoomHeatingPerCube(Integer id) {
+    Optional<Room> room = findRoom(id);
+    if(room.isPresent()) {
+      return Optional.of(room.get().getHeating() / room.get().getCube());
+    }
+    else return Optional.empty();
   }
 
   /**

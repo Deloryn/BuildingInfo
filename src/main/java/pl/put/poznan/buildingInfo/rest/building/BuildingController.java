@@ -49,6 +49,16 @@ public class BuildingController {
     Float totalHeating = buildingService.calculateBuildingHeating(buildingId);
     return new ResponseEntity<>(totalHeating, HttpStatus.OK);
   }
+
+  @RequestMapping("/heating-per-cube/{buildingId}")
+  public ResponseEntity<Float> getBuildingHeatingPerCube(@PathVariable Integer buildingId) {
+
+    logger.debug(buildingId.toString());
+    logger.info("Get building heating per cube. Building id: ", buildingId.toString());
+
+    Float totalHeatingPerCube = buildingService.calculateBuildingHeatingPerCube(buildingId);
+    return new ResponseEntity<>(totalHeatingPerCube, HttpStatus.OK);
+  }
 }
 
 

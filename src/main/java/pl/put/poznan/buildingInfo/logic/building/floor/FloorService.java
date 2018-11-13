@@ -45,15 +45,28 @@ public class FloorService {
   }
 
   /**
-   * Get heating energy cost for the whole floor with given id
+   * Get heating energy for the whole floor with given id
    * @param id id of the floor
-   * @return heating energy cost for the whole floor
+   * @return heating energy for the whole floor
    */
   public Float calculateFloorHeating(Integer id) {
     Stream<Floor> room = findFloor(id);
     return room.flatMap(f -> Arrays.stream(f.getRooms()))
             .map(Room::getHeating)
             .reduce((float) 0, Float::sum);
+  }
+
+  /**
+   * Get heating energy per cube for the whole floor with given id
+   * @param id id of the floor
+   * @return heating energy per cube for the whole floor
+   */
+  public Float calculateFloorHeatingPerCube(Integer id) {
+    Float heating = calculateFloorHeating(id);
+    Float cube = calculateFloorCube(id);
+
+    if(cube > 0) return heating / cube;
+    else return (float) 0;
   }
 
   /**

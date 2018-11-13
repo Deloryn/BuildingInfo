@@ -48,4 +48,14 @@ public class FloorController {
     Float totalHeating = floorService.calculateFloorHeating(floorId);
     return new ResponseEntity<>(totalHeating, HttpStatus.OK);
   }
+
+  @RequestMapping("/heating-per-cube/{floorId}")
+  public ResponseEntity<Float> getFloorHeatingPerCube(@PathVariable Integer floorId) {
+
+    logger.debug(floorId.toString());
+    logger.info("Get floor heating per cube. Floord id: ", floorId.toString());
+
+    Float totalHeatingPerCube = floorService.calculateFloorHeatingPerCube(floorId);
+    return new ResponseEntity<>(totalHeatingPerCube, HttpStatus.OK);
+  }
 }

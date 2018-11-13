@@ -72,4 +72,21 @@ public class RoomController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
+
+  @RequestMapping("/heating-per-cube/{roomId}")
+  public ResponseEntity<Float> getRoomHeatingPerCube(@PathVariable Integer roomId) {
+
+    logger.debug(roomId.toString());
+    logger.info("Get room heating per cube. Room id: ", roomId);
+
+    Optional<Float> roomHeatingPerCube = roomService.getRoomHeatingPerCube(roomId);
+
+    if(roomHeatingPerCube.isPresent()){
+      return new ResponseEntity<>(roomHeatingPerCube.get(), HttpStatus.OK);
+    }
+    else {
+      logger.info("room with given id does not exist. Returning not found");
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
 }
