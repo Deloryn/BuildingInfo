@@ -40,6 +40,16 @@ public class BuildingController {
     return new ResponseEntity<>(totalCube, HttpStatus.OK);
   }
 
+  @RequestMapping("/light/{buildingId}")
+  public ResponseEntity<Float> getBuildingLight(@PathVariable Integer buildingId) {
+
+    logger.debug(buildingId.toString());
+    logger.info("Get building light. Building id: ", buildingId.toString());
+
+    Float totalLight = buildingService.calculateBuildingLight(buildingId);
+    return new ResponseEntity<>(totalLight, HttpStatus.OK);
+  }
+
   @RequestMapping("/heating/{buildingId}")
   public ResponseEntity<Float> getBuildingHeating(@PathVariable Integer buildingId) {
 
@@ -58,6 +68,16 @@ public class BuildingController {
 
     Float totalHeatingPerCube = buildingService.calculateBuildingHeatingPerCube(buildingId);
     return new ResponseEntity<>(totalHeatingPerCube, HttpStatus.OK);
+  }
+
+  @RequestMapping("/light-per-area/{buildingId}")
+  public ResponseEntity<Float> getBuildingLightPerArea(@PathVariable Integer buildingId) {
+
+    logger.debug(buildingId.toString());
+    logger.info("Get building light per area. Building id: ", buildingId.toString());
+
+    Float totalLightPerArea = buildingService.calculateBuildingLightPerArea(buildingId);
+    return new ResponseEntity<>(totalLightPerArea, HttpStatus.OK);
   }
 }
 

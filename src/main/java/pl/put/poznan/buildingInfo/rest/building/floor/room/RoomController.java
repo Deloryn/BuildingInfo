@@ -56,6 +56,23 @@ public class RoomController {
     }
   }
 
+  @RequestMapping("/light/{roomId}")
+  public ResponseEntity<Float> getRoomLight(@PathVariable Integer roomId) {
+
+    logger.debug(roomId.toString());
+    logger.info("Get room light. Room id: ", roomId);
+
+    Optional<Float> roomLight = roomService.getRoomLight(roomId);
+
+    if(roomLight.isPresent()){
+      return new ResponseEntity<>(roomLight.get(), HttpStatus.OK);
+    }
+    else {
+      logger.info("room with given id does not exist. Returning not found");
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
   @RequestMapping("/heating/{roomId}")
   public ResponseEntity<Float> getRoomHeating(@PathVariable Integer roomId) {
 
@@ -83,6 +100,23 @@ public class RoomController {
 
     if(roomHeatingPerCube.isPresent()){
       return new ResponseEntity<>(roomHeatingPerCube.get(), HttpStatus.OK);
+    }
+    else {
+      logger.info("room with given id does not exist. Returning not found");
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
+  @RequestMapping("/light-per-area{roomId}")
+  public ResponseEntity<Float> getRoomLightPerArea(@PathVariable Integer roomId) {
+
+    logger.debug(roomId.toString());
+    logger.info("Get room light per area. Room id: ", roomId);
+
+    Optional<Float> roomLightPerArea = roomService.getRoomLightPerArea(roomId);
+
+    if(roomLightPerArea.isPresent()){
+      return new ResponseEntity<>(roomLightPerArea.get(), HttpStatus.OK);
     }
     else {
       logger.info("room with given id does not exist. Returning not found");

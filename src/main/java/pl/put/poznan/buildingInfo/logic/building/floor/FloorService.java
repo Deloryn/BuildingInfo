@@ -45,6 +45,18 @@ public class FloorService {
   }
 
   /**
+   * Get light of the whole floor with given id
+   * @param id id of the floor
+   * @return light of the floor
+   */
+  public Float calculateFloorLight(Integer id) {
+    Stream<Floor> room = findFloor(id);
+    return room.flatMap(f -> Arrays.stream(f.getRooms()))
+            .map(Room::getLight)
+            .reduce((float) 0, Float::sum);
+  }
+
+  /**
    * Get heating energy for the whole floor with given id
    * @param id id of the floor
    * @return heating energy for the whole floor
@@ -66,6 +78,19 @@ public class FloorService {
     Float cube = calculateFloorCube(id);
 
     if(cube > 0) return heating / cube;
+    else return (float) 0;
+  }
+
+  /**
+   * Get light per area for the whole floor with given id
+   * @param id id of the floor
+   * @return light per area for the whole floor
+   */
+  public Float calculateFloorLightPerArea(Integer id) {
+    Float light = calculateFloorLight(id);
+    Float area = calculateFloorArea(id);
+
+    if(area > 0) return light / area;
     else return (float) 0;
   }
 

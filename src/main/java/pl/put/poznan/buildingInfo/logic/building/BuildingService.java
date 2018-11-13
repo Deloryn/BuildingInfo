@@ -50,6 +50,21 @@ public class BuildingService {
   }
 
   /**
+   * Get light of the building with given id
+   * @param id id of the building
+   * @return light of the building
+   */
+  public Float calculateBuildingLight(Integer id) {
+    Building buildings[] = buildingRepository.getBuildingInfo().getBuildings();
+    Stream<Building> building = findBuilding(id, buildings);
+    return building
+            .flatMap(b -> Arrays.stream(b.getFloors()))
+            .flatMap(f -> Arrays.stream(f.getRooms()))
+            .map(Room::getLight)
+            .reduce((float) 0, Float::sum);
+  }
+
+  /**
    * Calculate heating energy for the whole building with given id
    * @param id id of the building
    * @return heating energy of the building
@@ -74,6 +89,19 @@ public class BuildingService {
     Float cube = calculateBuildingCube(id);
 
     if(cube > 0) return heating / cube;
+    else return (float) 0;
+  }
+
+    /**
+     * Calculate light per area for the whole building with given id
+     * @param id id of the building
+     * @return light per area for the whole building with given id
+     */
+  public Float calculateBuildingLightPerArea(Integer id) {
+    Float light = calculateBuildingLight(id);
+    Float area = calculateBuildingArea(id);
+
+    if(area > 0) return light / area;
     else return (float) 0;
   }
 
