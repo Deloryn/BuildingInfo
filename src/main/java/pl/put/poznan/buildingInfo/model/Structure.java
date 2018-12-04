@@ -1,5 +1,8 @@
 package pl.put.poznan.buildingInfo.model;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 public class Structure {
     protected Integer id;
     protected String name;
@@ -30,37 +33,60 @@ public class Structure {
     }
 
     protected Float calculateArea() {
-        Float total = 0f;
-        for(Structure structure : this.structures) {
-            total += structure.getArea();
+        if(this.structures.length == 0) {
+            return this.area;
         }
-        return total;
+        else {
+            Float total = 0f;
+            for(Structure structure : this.structures) {
+                total += structure.getArea();
+            }
+            return total;
+        }
     }
 
     protected Float calculateCube() {
-        Float total = 0f;
-        for(Structure structure : this.structures) {
-            total += structure.getCube();
+        if(this.structures.length == 0) {
+            return this.cube;
         }
-        return total;
+        else {
+            Float total = 0f;
+            for(Structure structure : this.structures) {
+                total += structure.getCube();
+            }
+            return total;
+        }
     }
 
     protected Float calculateHeating() {
-        Float total = 0f;
-        for(Structure structure : this.structures) {
-            total += structure.getHeating();
+        if(this.structures.length == 0) {
+            return this.heating;
         }
-        return total;
+        else {
+            Float total = 0f;
+            for(Structure structure : this.structures) {
+                total += structure.getHeating();
+            }
+            return total;
+        }
     }
 
     protected Float calculateLight() {
-        Float total = 0f;
-        for(Structure structure : this.structures) {
-            total += structure.getLight();
+        if(this.structures.length == 0) {
+            return this.light;
         }
-        return total;
+        else {
+            Float total = 0f;
+            for(Structure structure : this.structures) {
+                total += structure.getLight();
+            }
+            return total;
+        }
     }
 
+    public Integer getId() {
+        return this.id;
+    }
     public Float getArea() {
         this.area = this.calculateArea();
         return this.area;
@@ -76,5 +102,16 @@ public class Structure {
     public Float getLight() {
         this.light = this.calculateLight();
         return this.light;
+    }
+
+    public Stream<Structure> findStructure(Integer id) {
+        if(this.structures.length == 0) {
+            return Arrays.stream(this.structures);
+        }
+        else {
+            return Arrays.stream(this.structures)
+                    .flatMap(s -> s.findStructure(id))
+                    .filter(s -> s.getId().equals(id));
+        }
     }
 }
