@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.put.poznan.buildingInfo.logic.building.BuildingService;
+import pl.put.poznan.buildingInfo.logic.StructureService;
 
 
 @RestController
@@ -18,7 +18,7 @@ public class BuildingController {
   private static final Logger logger = LoggerFactory.getLogger(BuildingController.class);
 
   @Autowired
-  BuildingService buildingService;
+  StructureService structureService;
 
   @RequestMapping("/area/{buildingId}")
   public ResponseEntity<Float> getBuildingArea(@PathVariable Integer buildingId) {
@@ -26,7 +26,7 @@ public class BuildingController {
     logger.debug(buildingId.toString());
     logger.info("Get building area. Building id: ", buildingId.toString());
 
-    Float totalArea = buildingService.calculateBuildingArea(buildingId);
+    Float totalArea = structureService.calculateBuildingArea(buildingId);
     return new ResponseEntity<>(totalArea, HttpStatus.OK);
   }
 
@@ -36,7 +36,7 @@ public class BuildingController {
     logger.debug(buildingId.toString());
     logger.info("Get building cube. Building id: ", buildingId.toString());
 
-    Float totalCube = buildingService.calculateBuildingCube(buildingId);
+    Float totalCube = structureService.calculateBuildingCube(buildingId);
     return new ResponseEntity<>(totalCube, HttpStatus.OK);
   }
 
@@ -46,7 +46,7 @@ public class BuildingController {
     logger.debug(buildingId.toString());
     logger.info("Get building light. Building id: ", buildingId.toString());
 
-    Float totalLight = buildingService.calculateBuildingLight(buildingId);
+    Float totalLight = structureService.calculateBuildingLight(buildingId);
     return new ResponseEntity<>(totalLight, HttpStatus.OK);
   }
 
@@ -56,7 +56,7 @@ public class BuildingController {
     logger.debug(buildingId.toString());
     logger.info("Get building heating. Building id: ", buildingId.toString());
 
-    Float totalHeating = buildingService.calculateBuildingHeating(buildingId);
+    Float totalHeating = structureService.calculateBuildingHeating(buildingId);
     return new ResponseEntity<>(totalHeating, HttpStatus.OK);
   }
 
@@ -66,7 +66,7 @@ public class BuildingController {
     logger.debug(buildingId.toString());
     logger.info("Get building heating per cube. Building id: ", buildingId.toString());
 
-    Float totalHeatingPerCube = buildingService.calculateBuildingHeatingPerCube(buildingId);
+    Float totalHeatingPerCube = structureService.calculateBuildingHeatingPerCube(buildingId);
     return new ResponseEntity<>(totalHeatingPerCube, HttpStatus.OK);
   }
 
@@ -76,7 +76,7 @@ public class BuildingController {
     logger.debug(buildingId.toString());
     logger.info("Get building light per area. Building id: ", buildingId.toString());
 
-    Float totalLightPerArea = buildingService.calculateBuildingLightPerArea(buildingId);
+    Float totalLightPerArea = structureService.calculateBuildingLightPerArea(buildingId);
     return new ResponseEntity<>(totalLightPerArea, HttpStatus.OK);
   }
 }

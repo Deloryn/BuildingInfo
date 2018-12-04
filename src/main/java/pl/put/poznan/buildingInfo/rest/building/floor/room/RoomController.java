@@ -111,7 +111,7 @@ public class RoomController {
   public ResponseEntity<Float> getRoomLightPerArea(@PathVariable Integer roomId) {
 
     logger.debug(roomId.toString());
-    logger.info("Get room light per area. Room id: ", roomId);
+    logger.info("Get room light per area. oom id: ", roomId);
 
     Optional<Float> roomLightPerArea = roomService.getRoomLightPerArea(roomId);
 

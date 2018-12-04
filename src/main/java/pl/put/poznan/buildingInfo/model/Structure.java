@@ -87,6 +87,9 @@ public class Structure {
     public Integer getId() {
         return this.id;
     }
+    public Structure[] getStructures() {
+        return this.structures;
+    }
     public Float getArea() {
         this.area = this.calculateArea();
         return this.area;
