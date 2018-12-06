@@ -1,120 +1,57 @@
 package pl.put.poznan.buildingInfo.model;
 
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class Structure {
-    protected Integer id;
-    protected String name;
-    protected Structure[] structures;
-    protected Float area;
-    protected Float cube;
-    protected Float heating;
-    protected Float light;
-
-    public Structure(Integer id, String name, Structure[] structures) {
-        this.id = id;
-        this.name = name;
-        this.structures = structures;
-        this.area = 0f;
-        this.cube = 0f;
-        this.heating = 0f;
-        this.light = 0f;
-    }
-
-    public Structure(Integer id, String name, Structure[] structures, Float area, Float cube, Float heating, Float light) {
-        this.id = id;
-        this.name = name;
-        this.structures = structures;
-        this.area = area;
-        this.cube = cube;
-        this.heating = heating;
-        this.light = light;
-    }
-
-    protected Float calculateArea() {
-        if(this.structures.length == 0) {
-            return this.area;
-        }
-        else {
-            Float total = 0f;
-            for(Structure structure : this.structures) {
-                total += structure.getArea();
-            }
-            return total;
-        }
-    }
-
-    protected Float calculateCube() {
-        if(this.structures.length == 0) {
-            return this.cube;
-        }
-        else {
-            Float total = 0f;
-            for(Structure structure : this.structures) {
-                total += structure.getCube();
-            }
-            return total;
-        }
-    }
-
-    protected Float calculateHeating() {
-        if(this.structures.length == 0) {
-            return this.heating;
-        }
-        else {
-            Float total = 0f;
-            for(Structure structure : this.structures) {
-                total += structure.getHeating();
-            }
-            return total;
-        }
-    }
-
-    protected Float calculateLight() {
-        if(this.structures.length == 0) {
-            return this.light;
-        }
-        else {
-            Float total = 0f;
-            for(Structure structure : this.structures) {
-                total += structure.getLight();
-            }
-            return total;
-        }
-    }
+    private Integer id;
+    private String name;
+    private Structure[] structures;
+    private Double area;
+    private Double cube;
+    private Double heating;
+    private Double light;
 
     public Integer getId() {
+        if(this.id == null) {
+            return -1;
+        }
         return this.id;
     }
-    public Structure[] getStructures() {
-        return this.structures;
-    }
-    public Float getArea() {
-        this.area = this.calculateArea();
-        return this.area;
-    }
-    public Float getCube() {
-        this.cube = this.calculateCube();
-        return this.cube;
-    }
-    public Float getHeating() {
-        this.heating = this.calculateHeating();
-        return this.heating;
-    }
-    public Float getLight() {
-        this.light = this.calculateLight();
-        return this.light;
-    }
 
-    public Stream<Structure> findStructure(Integer id) {
-        if(this.structures.length == 0) {
-            return Arrays.stream(this.structures);
+    public Stream<Structure> getStructures() {
+        if(this.structures == null) {
+            return Stream.of(this);
         }
         else {
-            return Arrays.stream(this.structures)
-                    .flatMap(s -> s.findStructure(id))
-                    .filter(s -> s.getId().equals(id));
+            return Stream.concat(Stream.of(this), Stream.of(this.structures).flatMap(Structure::getStructures));
         }
+    }
+
+    public Double getArea() {
+        if(this.area == null) {
+            return 0.0;
+        }
+        return this.area;
+    }
+
+    public Double getCube() {
+        if(this.cube == null) {
+            return 0.0;
+        }
+        else return this.cube;
+    }
+
+    public Double getHeating() {
+        if(this.heating == null) {
+            return 0.0;
+        }
+        else return this.heating;
+    }
+
+    public Double getLight() {
+        if(this.light == null) {
+            return 0.0;
+        }
+        else return this.light;
     }
 }

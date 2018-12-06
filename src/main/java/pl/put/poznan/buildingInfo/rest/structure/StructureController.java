@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.put.poznan.buildingInfo.logic.StructureService;
 
-
 @RestController
 @RequestMapping("/structure")
 public class StructureController {
@@ -21,62 +20,62 @@ public class StructureController {
   StructureService structureService;
 
   @RequestMapping("/area/{structureId}")
-  public ResponseEntity<Float> getStructureArea(@PathVariable Integer structureId) {
+  public ResponseEntity<Double> getStructureArea(@PathVariable Integer structureId) {
 
     logger.debug(structureId.toString());
-    logger.info("Get structure area. Structure id: ", structureId.toString());
+    logger.info("Get structure area. Structure id: " + structureId.toString());
 
-    Float totalArea = structureService.getStructureArea(structureId);
+    Double totalArea = structureService.getStructureArea(structureId);
     return new ResponseEntity<>(totalArea, HttpStatus.OK);
   }
 
   @RequestMapping("/cube/{structureId}")
-  public ResponseEntity<Float> getStructureCube(@PathVariable Integer structureId) {
+  public ResponseEntity<Double> getStructureCube(@PathVariable Integer structureId) {
 
     logger.debug(structureId.toString());
-    logger.info("Get structure cube. Structure id: ", structureId.toString());
+    logger.info("Get structure cube. Structure id: " + structureId.toString());
 
-    Float totalCube = structureService.getStructureCube(structureId);
+    Double totalCube = structureService.getStructureCube(structureId);
     return new ResponseEntity<>(totalCube, HttpStatus.OK);
   }
 
   @RequestMapping("/light/{structureId}")
-  public ResponseEntity<Float> getStructureLight(@PathVariable Integer structureId) {
+  public ResponseEntity<Double> getStructureLight(@PathVariable Integer structureId) {
 
     logger.debug(structureId.toString());
-    logger.info("Get structure light. Structure id: ", structureId.toString());
+    logger.info("Get structure light. Structure id: " + structureId.toString());
 
-    Float totalLight = structureService.getStructureLight(structureId);
+    Double totalLight = structureService.getStructureLight(structureId);
     return new ResponseEntity<>(totalLight, HttpStatus.OK);
   }
 
   @RequestMapping("/heating/{structureId}")
-  public ResponseEntity<Float> getStructureHeating(@PathVariable Integer structureId) {
+  public ResponseEntity<Double> getStructureHeating(@PathVariable Integer structureId) {
 
     logger.debug(structureId.toString());
-    logger.info("Get structure heating. Structure id: ", structureId.toString());
+    logger.info("Get structure heating. Structure id: " + structureId.toString());
 
-    Float totalHeating = structureService.getStructureHeating(structureId);
+    Double totalHeating = structureService.getStructureHeating(structureId);
     return new ResponseEntity<>(totalHeating, HttpStatus.OK);
   }
 
   @RequestMapping("/heating-per-cube/{structureId}")
-  public ResponseEntity<Float> getStructureHeatingPerCube(@PathVariable Integer structureId) {
+  public ResponseEntity<Double> getStructureHeatingPerCube(@PathVariable Integer structureId) {
 
     logger.debug(structureId.toString());
-    logger.info("Get structure heating per cube. Structure id: ", structureId.toString());
+    logger.info("Get structure heating per cube. Structure id: " + structureId.toString());
 
-    Float totalHeatingPerCube = structureService.getStructureHeatingPerCube(structureId);
+    Double totalHeatingPerCube = structureService.getStructureHeatingPerCube(structureId);
     return new ResponseEntity<>(totalHeatingPerCube, HttpStatus.OK);
   }
 
   @RequestMapping("/light-per-area/{structureId}")
-  public ResponseEntity<Float> getStructureLightPerArea(@PathVariable Integer structureId) {
+  public ResponseEntity<Double> getStructureLightPerArea(@PathVariable Integer structureId) {
 
     logger.debug(structureId.toString());
-    logger.info("Get structure light per area. Structure id: ", structureId.toString());
+    logger.info("Get structure light per area. Structure id: " + structureId.toString());
 
-    Float totalLightPerArea = structureService.getStructureLightPerArea(structureId);
+    Double totalLightPerArea = structureService.getStructureLightPerArea(structureId);
     return new ResponseEntity<>(totalLightPerArea, HttpStatus.OK);
   }
 }

@@ -16,17 +16,36 @@ public class StructureService {
   StructureRepository structureRepository;
 
   /**
+   * Find the structure with given id
+   * @param id id of the structure
+   * @return the structure object (or null if not found)
+   */
+  public Structure findStructure(Integer id) {
+    Optional<Structure> optionalStructure =
+            structureRepository
+            .getStructureInfo()
+            .getStructures()
+            .filter(s -> s.getId().equals(id))
+            .findFirst();
+
+    if(optionalStructure.isPresent()) {
+      return optionalStructure.get();
+    }
+    else return null;
+  }
+
+  /**
    * Get area of the structure with given id
    * @param id id of the structure
    * @return area of the structure
    */
-  public Float getStructureArea(Integer id) {
-    Optional<Structure> optionalStructure = structureRepository.getStructureInfo().findStructure(id).findFirst();
-    if(optionalStructure.isPresent()) {
-      return optionalStructure.get().getArea();
+  public Double getStructureArea(Integer id) {
+    Structure structure = findStructure(id);
+    if(structure != null) {
+      return structure.getStructures().mapToDouble(Structure::getArea).sum();
     }
     else {
-      return 0f;
+      return 0.0;
     }
   }
 
@@ -35,13 +54,13 @@ public class StructureService {
    * @param id id of the structure
    * @return cube of the structure
    */
-  public Float getStructureCube(Integer id) {
-    Optional<Structure> optionalStructure = structureRepository.getStructureInfo().findStructure(id).findFirst();
-    if(optionalStructure.isPresent()) {
-      return optionalStructure.get().getCube();
+  public Double getStructureCube(Integer id) {
+    Structure structure = findStructure(id);
+    if(structure != null) {
+      return structure.getStructures().mapToDouble(Structure::getCube).sum();
     }
     else {
-      return 0f;
+      return 0.0;
     }
   }
 
@@ -50,13 +69,13 @@ public class StructureService {
    * @param id id of the structure
    * @return light of the structure
    */
-  public Float getStructureLight(Integer id) {
-    Optional<Structure> optionalStructure = structureRepository.getStructureInfo().findStructure(id).findFirst();
-    if(optionalStructure.isPresent()) {
-      return optionalStructure.get().getLight();
+  public Double getStructureLight(Integer id) {
+    Structure structure = findStructure(id);
+    if(structure != null) {
+      return structure.getStructures().mapToDouble(Structure::getLight).sum();
     }
     else {
-      return 0f;
+      return 0.0;
     }
   }
 
@@ -65,13 +84,13 @@ public class StructureService {
    * @param id id of the structure
    * @return heating of the structure
    */
-  public Float getStructureHeating(Integer id) {
-    Optional<Structure> optionalStructure = structureRepository.getStructureInfo().findStructure(id).findFirst();
-    if(optionalStructure.isPresent()) {
-      return optionalStructure.get().getHeating();
+  public Double getStructureHeating(Integer id) {
+    Structure structure = findStructure(id);
+    if(structure != null) {
+      return structure.getStructures().mapToDouble(Structure::getHeating).sum();
     }
     else {
-      return 0f;
+      return 0.0;
     }
   }
 
@@ -80,11 +99,11 @@ public class StructureService {
    * @param id id of the structure
    * @return heating energy per cube of the whole structure
    */
-  public Float getStructureHeatingPerCube(Integer id) {
-    Float heating = getStructureHeating(id);
-    Float cube = getStructureCube(id);
+  public Double getStructureHeatingPerCube(Integer id) {
+    Double heating = getStructureHeating(id);
+    Double cube = getStructureCube(id);
     if(cube > 0) return heating / cube;
-    else return 0f;
+    else return 0.0;
   }
 
     /**
@@ -92,11 +111,11 @@ public class StructureService {
      * @param id id of the structure
      * @return light per area for the whole structure with given id
      */
-  public Float getStructureLightPerArea(Integer id) {
-    Float light = getStructureLight(id);
-    Float area = getStructureArea(id);
+  public Double getStructureLightPerArea(Integer id) {
+    Double light = getStructureLight(id);
+    Double area = getStructureArea(id);
     if(area > 0) return light / area;
-    else return 0f;
+    else return 0.0;
   }
 
 }
