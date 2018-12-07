@@ -78,6 +78,16 @@ public class StructureController {
     Double totalLightPerArea = structureService.getStructureLightPerArea(structureId);
     return new ResponseEntity<>(totalLightPerArea, HttpStatus.OK);
   }
+
+  @RequestMapping("/maintenance-cost/{structureId}/{unitPrice}")
+  public ResponseEntity<Double> getMaintenanceCost(@PathVariable Integer structureId, @PathVariable Double unitPrice) {
+
+    logger.debug(structureId.toString());
+    logger.info("Get the maintenance cost for the structure. Structure id: " + structureId.toString() + " cost: " + unitPrice.toString());
+
+    Double maintenanceCost = structureService.getMaintenanceCost(structureId, unitPrice);
+    return new ResponseEntity<>(maintenanceCost, HttpStatus.OK);
+  }
 }
 
 

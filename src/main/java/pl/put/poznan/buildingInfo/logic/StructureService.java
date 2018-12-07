@@ -118,4 +118,16 @@ public class StructureService {
     else return 0.0;
   }
 
+  /**
+   * Calculate cost for the maintenance of the structure
+   * @param id id of the structure
+   * @param unitPrice cost of a single light unit
+   * @return the cost for the maintenance of the structure
+   */
+  public Double getMaintenanceCost(Integer id, Double unitPrice) {
+    if(unitPrice == null) unitPrice = 0.0;
+    Double light = getStructureLight(id);
+    return light * unitPrice;
+  }
+
 }
