@@ -12,6 +12,10 @@ import java.util.Optional;
 @Component
 public class StructureService {
 
+  /**
+   * structureRepository is an instance of the class StructureRepository,
+   * which is a broker used in JSON deserialization
+   */
   @Autowired
   StructureRepository structureRepository;
 
