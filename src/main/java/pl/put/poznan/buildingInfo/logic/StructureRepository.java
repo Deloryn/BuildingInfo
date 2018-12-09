@@ -9,11 +9,21 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * A class that is a broker used in JSON deserialization
+ */
 @Component
 public class StructureRepository {
 
+  /**
+   * The filename of the JSON file
+   */
   private static final String FILE_NAME = "structures.json";
 
+  /**
+   * A method which deserializes JSON and instantiates structure objects
+   * @return object of the main structure or structures
+   */
   public Structure getStructureInfo() {
 
     byte[] fileContent = getFileContentFromResource();
@@ -24,6 +34,10 @@ public class StructureRepository {
     return gson.fromJson(jsonString, Structure.class);
   }
 
+  /**
+   * A method that reads the JSON file and return its content
+   * @return the content of the JSON file
+   */
   private byte[] getFileContentFromResource() {
 
     String path = null;

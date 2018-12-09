@@ -12,6 +12,10 @@ import java.util.Optional;
 @Component
 public class StructureService {
 
+  /**
+   * structureRepository is an instance of the class StructureRepository,
+   * which is a broker used in JSON deserialization
+   */
   @Autowired
   StructureRepository structureRepository;
 
@@ -116,6 +120,18 @@ public class StructureService {
     Double area = getStructureArea(id);
     if(area > 0) return light / area;
     else return 0.0;
+  }
+
+  /**
+   * Calculate cost for the maintenance of the structure
+   * @param id id of the structure
+   * @param unitPrice cost of a single light unit
+   * @return the cost for the maintenance of the structure
+   */
+  public Double getMaintenanceCost(Integer id, Double unitPrice) {
+    if(unitPrice == null) unitPrice = 0.0;
+    Double light = getStructureLight(id);
+    return light * unitPrice;
   }
 
 }
