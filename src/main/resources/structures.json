@@ -1,12 +1,12 @@
 {
-  "buildings": [
+  "structures": [
     {
       "id": 1,
       "name": "Centrum Wykładowe",
-      "floors": [
+      "structures": [
         {
           "id": 2,
-          "rooms": [
+          "structures": [
             {
               "id": 3,
               "name": "L053 BT",
@@ -27,7 +27,7 @@
         },
         {
           "id": 5,
-          "rooms": [
+          "structures": [
             {
               "id": 6,
               "name": "CW 8",
