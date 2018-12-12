@@ -6,10 +6,20 @@ import org.junit.Test;
 import pl.put.poznan.buildingInfo.logic.StructureRepository;
 import pl.put.poznan.buildingInfo.logic.StructureService;
 
+/**
+ * A class containing test methods for StructureService class
+ */
 public class StructureServiceTest {
 
+    /**
+     * An instance of the tested class
+     */
     private StructureService structureService;
 
+    /**
+     * A method that is executed before each test method.
+     * It prepares Structure Service and StructureRepository with test data (from test_structures.json)
+     */
     @Before
     public void setUp() {
         // TODO
@@ -19,6 +29,9 @@ public class StructureServiceTest {
         this.structureService.setStructureRepository(structureRepository);
     }
 
+    /**
+     * Test method for findStructure. It should return Structure object or null if it does not exist
+     */
     @Test
     public void findStructureTest() {
         Assert.assertNull(structureService.findStructure(27));
@@ -30,6 +43,9 @@ public class StructureServiceTest {
         Assert.assertNotNull(structureService.findStructure(5));
     }
 
+    /**
+     * Test method that checks if areas of structures are calculated properly
+     */
     @Test
     public void getStructureAreaTest() {
         Assert.assertEquals((Double) 11280.0, structureService.getStructureArea(0));
@@ -39,6 +55,9 @@ public class StructureServiceTest {
         Assert.assertEquals((Double) 1240.0, structureService.getStructureArea(7));
     }
 
+    /**
+     * Test method that checks if cubes of structures are calculated properly
+     */
     @Test
     public void getStructureCubeTest() {
         Assert.assertEquals((Double) 22322.0, structureService.getStructureCube(0));
@@ -47,6 +66,9 @@ public class StructureServiceTest {
         Assert.assertEquals((Double) 20235.0, structureService.getStructureCube(6));
     }
 
+    /**
+     * Test method that checks if light of structures is calculated properly
+     */
     @Test
     public void getStructureLightTest() {
         Assert.assertEquals((Double) 365.0, structureService.getStructureLight(1));
@@ -56,6 +78,9 @@ public class StructureServiceTest {
         Assert.assertEquals((Double) 290.0, structureService.getStructureLight(4));
     }
 
+    /**
+     * Test method that checks if heating of structures is calculated properly
+     */
     @Test
     public void getStructureHeatingTest() {
         Assert.assertEquals((Double) 24189.0, structureService.getStructureHeating(0));
@@ -65,6 +90,9 @@ public class StructureServiceTest {
         Assert.assertEquals((Double) 16893.0, structureService.getStructureHeating(5));
     }
 
+    /**
+     * Test method that checks if heating per cube of structures is calculated properly
+     */
     @Test
     public void getStructureHeatingPerCubeTest() {
         Assert.assertEquals((Double) 0.0, structureService.getStructureHeatingPerCube(-1));
@@ -74,6 +102,9 @@ public class StructureServiceTest {
         Assert.assertEquals(10.929577465, structureService.getStructureHeatingPerCube(7), 0.005);
     }
 
+    /**
+     * Test method that checks if light per area of structures is calculated properly
+     */
     @Test
     public void getStructureLightPerAreaTest() {
         Assert.assertEquals((Double) 0.0, structureService.getStructureLightPerArea(-4));
@@ -84,6 +115,9 @@ public class StructureServiceTest {
         Assert.assertEquals((Double) 0.0, structureService.getStructureLightPerArea(8));
     }
 
+    /**
+     * Test method that checks if the maintenance cost of structures is calculated properly
+     */
     @Test
     public void getMaintenanceCostTest() {
         Assert.assertEquals(0.0, structureService.getMaintenanceCost(-3, 1.20), 0.005);

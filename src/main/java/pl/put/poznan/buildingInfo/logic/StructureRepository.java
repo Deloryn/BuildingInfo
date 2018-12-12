@@ -39,6 +39,11 @@ public class StructureRepository {
     return mainStructure;
   }
 
+    /**
+     * A method which deserializes JSON (from the given filename) and instantiates structure objects
+     * @param filePath path of the json file (from resources)
+     * @return object of the main structure
+     */
   public Structure getStructureInfo(String filePath) {
       if(mainStructure == null) {
           byte[] fileContent = getFileContentFromResource(filePath);
@@ -76,6 +81,11 @@ public class StructureRepository {
     return fileContent;
   }
 
+    /**
+     * A method that reads the JSON file and return its content
+     * @param filePath path of the json file (from resources)
+     * @return the content of the JSON file
+     */
   private byte[] getFileContentFromResource(String filePath) {
       String path = null;
 
