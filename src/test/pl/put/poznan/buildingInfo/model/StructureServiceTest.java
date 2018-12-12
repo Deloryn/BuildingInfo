@@ -22,7 +22,6 @@ public class StructureServiceTest {
      */
     @Before
     public void setUp() {
-        // TODO
         StructureRepository structureRepository = new StructureRepository();
         structureRepository.getStructureInfo("test_structures.json");
         this.structureService = new StructureService();
