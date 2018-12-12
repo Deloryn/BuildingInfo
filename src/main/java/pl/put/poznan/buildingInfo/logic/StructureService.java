@@ -24,6 +24,29 @@ public class StructureService {
    * @param id id of the structure
    * @return the structure object (or null if not found)
    */
+
+
+  public Structure findStructure(Integer id) {
+    System.out.println("kurczak1");
+    Optional<Structure> optionalStructure =
+            structureRepository
+                    .getStructureInfo()
+                    .getStructures()
+                    .filter(s -> s.getId().equals(id))
+                    .findFirst();
+
+    System.out.println("kurczak2");
+    if(optionalStructure.isPresent()) {
+      System.out.println("kurczak3");
+      return optionalStructure.get();
+    }
+    else {
+      System.out.println("kurczak4");
+      return null;
+    }
+  }
+
+  /*
   public Structure findStructure(Integer id) {
     Optional<Structure> optionalStructure =
             structureRepository
@@ -36,7 +59,7 @@ public class StructureService {
       return optionalStructure.get();
     }
     else return null;
-  }
+  } */
 
   /**
    * Get area of the structure with given id

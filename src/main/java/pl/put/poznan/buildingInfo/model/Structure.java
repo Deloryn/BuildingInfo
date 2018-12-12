@@ -1,5 +1,7 @@
 package pl.put.poznan.buildingInfo.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.stream.Stream;
 
 /**
@@ -10,6 +12,7 @@ public class Structure {
     /**
      * ID of the structure (it is used to identify the structure in requests)
      */
+
     private Integer id;
     /**
      * Name of the structure
@@ -102,5 +105,49 @@ public class Structure {
             return 0.0;
         }
         else return this.light;
+    }
+
+    /**
+     * Cypa:
+     */
+    public Structure(){
+
+    }
+
+    public Structure(Integer id, String name, Double area, Double cube, Double heating, Double light){
+        setId(id);
+        setName(name);
+        setArea(area);
+        setCube(cube);
+        setHeating(heating);
+        setLight(light);
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setArea(Double area) {
+        this.area = area;
+    }
+
+    public void setCube(Double cube) {
+        this.cube = cube;
+    }
+
+    public void setHeating(Double heating) {
+        this.heating = heating;
+    }
+
+    public void setLight(Double light) {
+        this.light = light;
+    }
+
+    public String getName() {
+        return name;
     }
 }

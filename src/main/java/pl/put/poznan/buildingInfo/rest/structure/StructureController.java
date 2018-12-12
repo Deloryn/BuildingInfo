@@ -1,5 +1,6 @@
 package pl.put.poznan.buildingInfo.rest.structure;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.put.poznan.buildingInfo.logic.StructureService;
+import pl.put.poznan.buildingInfo.model.Structure;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * A controller class for all structure operations
@@ -26,7 +31,7 @@ public class StructureController {
    * structureService object contains all the logic for structure operations
    */
   @Autowired
-  StructureService structureService;
+  StructureService structureService = new StructureService();
 
   /**
    * A handler for structure area requests
@@ -35,11 +40,12 @@ public class StructureController {
    */
   @RequestMapping("/area/{structureId}")
   public ResponseEntity<Double> getStructureArea(@PathVariable Integer structureId) {
-
+    System.out.println("totalArea ");
     logger.debug(structureId.toString());
     logger.info("Get structure area. Structure id: " + structureId.toString());
 
     Double totalArea = structureService.getStructureArea(structureId);
+    System.out.println("totalArea " + totalArea);
     return new ResponseEntity<>(totalArea, HttpStatus.OK);
   }
 
@@ -72,6 +78,7 @@ public class StructureController {
     Double totalLight = structureService.getStructureLight(structureId);
     return new ResponseEntity<>(totalLight, HttpStatus.OK);
   }
+
 
   /**
    * A handler for structure heating requests
@@ -132,6 +139,35 @@ public class StructureController {
 
     Double maintenanceCost = structureService.getMaintenanceCost(structureId, unitPrice);
     return new ResponseEntity<>(maintenanceCost, HttpStatus.OK);
+  }
+
+  @RequestMapping("/create/{structureId}/{name}/{area}/{cube}/{heating}/{light}")
+  public void createStructureArea(@PathVariable Integer structureId, @PathVariable String name, @PathVariable Double area,
+                                  @PathVariable Double cube, @PathVariable Double heating, @PathVariable Double light) throws IOException {
+    System.out.println("poszlo " + structureId);
+    System.out.println("typ " + structureId.getClass().getName());
+    structureService.findStructure(1);
+    System.out.println("sama metoda");
+    //Structure structure = new Structure(structureId,name,area,cube,heating,light);
+    Structure structure = structureService.findStructure(1);
+    System.out.println("zfindowalo");
+    try{
+      System.out.println("tkie m id: " + structure.getName());
+    }
+    catch (NullPointerException e){
+      System.out.println("Caught the NullPointerException");
+    }
+    ObjectMapper mapper = new ObjectMapper();
+    Structure obj = mapper.readValue(new File("d:\\javy\\bildowanie\\src\\main\\resources\\structures.json"), Structure.class);
+    System.out.println("poszlo " + obj.getId());
+    if(obj == null) System.out.println("sdvsdv");
+    try{
+      System.out.println("tkie m id: " + structureService.findStructure(structureId).getName());
+    }
+    catch (NullPointerException e){
+      System.out.println("Caught the NullPointerException");
+    }
+
   }
 }
 
