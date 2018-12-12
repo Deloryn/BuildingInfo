@@ -1,6 +1,7 @@
 package pl.put.poznan.buildingInfo.logic;
 
 import com.google.gson.Gson;
+import org.springframework.core.StandardReflectionParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
 import pl.put.poznan.buildingInfo.model.Structure;
 
@@ -20,18 +21,34 @@ public class StructureRepository {
    */
   private static final String FILE_NAME = "structures.json";
 
+  private static Structure mainStructure;
+
   /**
    * A method which deserializes JSON and instantiates structure objects
-   * @return object of the main structure or structures
+   * @return object of the main structure
    */
   public Structure getStructureInfo() {
+    if(mainStructure == null) {
+        byte[] fileContent = getFileContentFromResource();
 
-    byte[] fileContent = getFileContentFromResource();
+        String jsonString = new String(fileContent, StandardCharsets.UTF_8);
 
-    String jsonString = new String(fileContent, StandardCharsets.UTF_8);
+        Gson gson = new Gson();
+        mainStructure = gson.fromJson(jsonString, Structure.class);
+    }
+    return mainStructure;
+  }
 
-    Gson gson = new Gson();
-    return gson.fromJson(jsonString, Structure.class);
+  public Structure getStructureInfo(String filePath) {
+      if(mainStructure == null) {
+          byte[] fileContent = getFileContentFromResource(filePath);
+
+          String jsonString = new String(fileContent, StandardCharsets.UTF_8);
+
+          Gson gson = new Gson();
+          mainStructure = gson.fromJson(jsonString, Structure.class);
+      }
+      return mainStructure;
   }
 
   /**
@@ -57,5 +74,24 @@ public class StructureRepository {
     }
 
     return fileContent;
+  }
+
+  private byte[] getFileContentFromResource(String filePath) {
+      String path = null;
+
+      try {
+          path = Paths.get(getClass().getClassLoader().getResource(filePath).toURI()).toString();
+      } catch (Exception e) {
+          return new byte[0];
+      }
+
+      byte[] fileContent;
+
+      try {
+          fileContent = Files.readAllBytes(Paths.get(path));
+      } catch (IOException e) {
+          return new byte[0];
+      }
+      return fileContent;
   }
 }

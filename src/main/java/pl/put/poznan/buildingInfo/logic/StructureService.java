@@ -19,6 +19,10 @@ public class StructureService {
   @Autowired
   StructureRepository structureRepository;
 
+  public void setStructureRepository(StructureRepository repository) {
+      this.structureRepository = repository;
+  }
+
   /**
    * Find the structure with given id
    * @param id id of the structure

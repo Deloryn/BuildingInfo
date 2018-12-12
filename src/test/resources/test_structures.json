@@ -1,0 +1,66 @@
+{
+  "id": 0,
+  "name": "Chicken farm",
+  "structures": [
+    {
+      "id": 1,
+      "name": "Chicken floor 1",
+      "structures": [
+        {
+          "id": 2,
+          "name": "Chicken Room 1",
+          "area": 17,
+          "cube": 90,
+          "heating": 7120,
+          "light": 45
+        },
+        {
+          "id": 3,
+          "name": "Chicken Room 2",
+          "area": 10,
+          "cube": 20,
+          "heating": 120,
+          "light": 30
+        },
+        {
+          "id": 4,
+          "name": "Chicken Room 3",
+          "area": 89,
+          "cube": 14,
+          "heating": 56,
+          "light": 290
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Chicken floor 2",
+      "structures": [
+        {
+          "id": 6,
+          "name": "Chicken Room 4",
+          "area": 9847,
+          "cube": 20235,
+          "heating": 1250,
+          "light": 3021
+        },
+        {
+          "id": 7,
+          "name": "Chicken Room 5",
+          "area": 1240,
+          "cube": 1420,
+          "heating": 15520,
+          "light": 9030
+        },
+        {
+          "id": 8,
+          "name": "Chicken Room 6",
+          "area": 77,
+          "cube": 543,
+          "heating": 123,
+          "light": 0
+        }
+      ]
+    }
+  ]
+}
