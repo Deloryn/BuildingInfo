@@ -21,7 +21,10 @@ public class StructureRepository {
    */
   private static final String FILE_NAME = "structures.json";
 
-  private static Structure mainStructure;
+  /**
+  * An instance of the main structure (which is a parent of all other structures)
+  */
+  private Structure mainStructure;
 
   /**
    * A method which deserializes JSON and instantiates structure objects
