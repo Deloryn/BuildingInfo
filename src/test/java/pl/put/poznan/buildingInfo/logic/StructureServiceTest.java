@@ -1,4 +1,4 @@
-package pl.put.poznan.buildingInfo.model;
+package pl.put.poznan.buildingInfo.logic;
 
 import org.junit.Assert;
 import org.junit.Before;
