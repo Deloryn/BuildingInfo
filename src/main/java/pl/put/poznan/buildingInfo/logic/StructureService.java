@@ -25,13 +25,14 @@ public class StructureService {
    * @return the structure object (or null if not found)
    */
   public Structure findStructure(Integer id) {
+    System.out.println("czy optional");
     Optional<Structure> optionalStructure =
             structureRepository
             .getStructureInfo()
             .getStructures()
             .filter(s -> s.getId().equals(id))
             .findFirst();
-
+    System.out.println("tak");
     if(optionalStructure.isPresent()) {
       return optionalStructure.get();
     }

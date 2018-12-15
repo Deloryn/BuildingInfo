@@ -1,5 +1,8 @@
 package pl.put.poznan.buildingInfo.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -19,6 +22,7 @@ public class Structure {
      * An array of its children structures
      */
     private Structure[] structures;
+    //private List <Structure> structures= new ArrayList<>();
     /**
      * Area of the structure
      */
@@ -56,6 +60,8 @@ public class Structure {
             return Stream.of(this);
         }
         else {
+            //Structure [] structureTab = new Structure [this.structures.size()];
+            //structures.toArray(structureTab);
             return Stream.concat(Stream.of(this), Stream.of(this.structures).flatMap(Structure::getStructures));
         }
     }
@@ -103,4 +109,108 @@ public class Structure {
         }
         else return this.light;
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /*public void setStructures(Structure[] structures) {
+        this.structures = structures;
+    }*/
+
+    public void setArea(Double area) {
+        this.area = area;
+    }
+
+    public void setCube(Double cube) {
+        this.cube = cube;
+    }
+
+    public void setHeating(Double heating) {
+        this.heating = heating;
+    }
+
+    public void setLight(Double light) {
+        this.light = light;
+    }
+
+    public Structure() {
+        this.structures = null;
+    }
+
+    public Structure(Integer id, String name, Double area, Double cube, Double heating, Double light) {
+        this.id = id;
+        this.name = name;
+        this.area = area;
+        this.cube = cube;
+        this.heating = heating;
+        this.light = light;
+        this.structures = null;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void addStructure(Structure structure){
+        System.out.println("imie tej: " + structure.getName());
+        System.out.println("klasa structures " + this.structures.getClass().getName());
+        System.out.println(this.structures[0].getName());
+
+        ArrayList<Structure> structureList = new ArrayList<Structure>(Arrays.asList(this.structures));
+
+        for(Structure s : structureList){
+            System.out.println("structura: " + s.getId() + " " + s.getName());
+        }
+
+        System.out.println("wilkosc structures: " + this.structures.length);
+        System.out.println("wilkosc structureList: " + structureList.size());
+        System.out.println("klasa structureList " + structureList.getClass().getName());
+        System.out.println("klasa structures " + this.structures.getClass().getName());
+        System.out.println("klasa structure " + structure.getClass().getName());
+
+        structureList.add(structure);
+
+        for(Structure s : structureList){
+            System.out.println("structura: " + s.getId() + " " + s.getName());
+        }
+
+        System.out.println("dodalismy");
+        System.out.println("wilkosc: " + structureList.size());
+
+        Structure [] tabOfstructures = new Structure [structureList.size()];
+        structureList.toArray(tabOfstructures);
+        this.structures = tabOfstructures;
+        System.out.println("wilkosc: " + this.structures.length);
+
+        System.out.println("takie imie: " + this.structures[2].getId());
+
+    }
+
+    public void showNumberStructure(){
+        System.out.println("jest ich " + this.structures.length);
+        System.out.println("clasa ich " + this.structures.getClass().getName());
+    }
+
+    public Structure getStructureByIndex(int i){
+        return this.structures[i];
+    }
+
+    public void deleteStructure(){
+
+    }
+
+
+
+    /*public Structure[] getStructures_1 (){
+        return structures;
+    }
+
+    public void addSpecialChild (Structure structure){
+        this.structures[2] = structure;
+    }*/
 }

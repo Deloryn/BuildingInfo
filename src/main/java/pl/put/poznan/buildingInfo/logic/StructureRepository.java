@@ -26,11 +26,13 @@ public class StructureRepository {
    */
   public Structure getStructureInfo() {
 
+    System.out.println("czy getStructureInfo");
     byte[] fileContent = getFileContentFromResource();
 
     String jsonString = new String(fileContent, StandardCharsets.UTF_8);
 
     Gson gson = new Gson();
+    System.out.println("czy getStructureInfo");
     return gson.fromJson(jsonString, Structure.class);
   }
 
