@@ -23,11 +23,12 @@ public class StructureRepository {
   private String fileName;
 
   /**
-  * An instance of the main structure (which is a parent of all other structures)
-  */
+   * An instance of the main structure (which is a parent of all other structures)
+   */
 
   /**
    * A method which deserializes JSON and instantiates structure objects
+   *
    * @return object of the main structure
    */
   public Structure getStructureInfo() {
@@ -42,6 +43,7 @@ public class StructureRepository {
 
   /**
    * A method that reads the JSON file and return its content
+   *
    * @return the content of the JSON file
    */
   private byte[] getFileContentFromResource() {
