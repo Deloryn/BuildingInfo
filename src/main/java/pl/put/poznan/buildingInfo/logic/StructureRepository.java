@@ -1,7 +1,6 @@
 package pl.put.poznan.buildingInfo.logic;
 
 import com.google.gson.Gson;
-import org.springframework.core.StandardReflectionParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
 import pl.put.poznan.buildingInfo.model.Structure;
 
