@@ -3,8 +3,6 @@ package pl.put.poznan.buildingInfo.logic;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import pl.put.poznan.buildingInfo.logic.StructureRepository;
-import pl.put.poznan.buildingInfo.logic.StructureService;
 
 /**
  * A class containing test methods for StructureService class
