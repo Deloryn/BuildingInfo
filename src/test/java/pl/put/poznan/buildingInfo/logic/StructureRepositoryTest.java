@@ -47,7 +47,13 @@ public class StructureRepositoryTest {
         Structure mockMainStructure = new Structure(null, null, structuresForMockMain, null, null, null, null);
 
         Structure mainStructure = this.structureRepository.getStructureInfo();
-        Assert.assertEquals(mockMainStructure, mainStructure);
+        Assert.assertEquals(mockMainStructure.getId(), mainStructure.getId());
+        Assert.assertEquals(mockMainStructure.getName(), mainStructure.getName());
+        Assert.assertEquals(mockMainStructure.getStructures().count(), mainStructure.getStructures().count());
+        Assert.assertEquals(mockMainStructure.getArea(), mainStructure.getArea());
+        Assert.assertEquals(mockMainStructure.getCube(), mainStructure.getCube());
+        Assert.assertEquals(mockMainStructure.getHeating(), mainStructure.getHeating());
+        Assert.assertEquals(mockMainStructure.getLight(), mainStructure.getLight());
     }
 
     /**
