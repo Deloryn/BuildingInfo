@@ -1,60 +1,25 @@
 package pl.put.poznan.buildingInfo.logic;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import pl.put.poznan.buildingInfo.model.Structure;
 
 /**
  * A class containing test methods for StructureRepository class
  */
+@SpringBootTest
+@RunWith(SpringRunner.class)
 public class StructureRepositoryTest {
 
     /**
      * An instance of the tested class
      */
-    private StructureRepository structureRepository;
-
-    /**
-     * A method that is executed before each test method.
-     * It prepares fresh instance of Structure Repository
-     */
-    @Before
-    public void setUp() {
-        this.structureRepository = new StructureRepository();
-    }
-
-    /**
-     * Test method for getStructureInfo(). It checks if deserialized JSON is the same as the hard-coded one
-     */
-    @Test
-    public void getStructureInfoTest() {
-        Structure structure3 = new Structure(3, "L053 BT", null, 123.34, 1002.43, 234.43, 467.54);
-        Structure structure4 = new Structure(4, "CW 1", null, 83.34, 702.43, 134.43, 167.54);
-        Structure structure6 = new Structure(6, "CW 8", null, 83.34, 772.43, 145.43, 154.54);
-        Structure structure7 = new Structure(7, "CW 9", null, 83.34, 752.43, 187.43, 123.54);
-
-        Structure[] structuresFor2 = {structure3, structure4};
-        Structure structure2 = new Structure(2, null, structuresFor2, null, null, null, null);
-
-        Structure[] structuresFor5 = {structure6, structure7};
-        Structure structure5 = new Structure(5, null, structuresFor5, null, null, null, null);
-
-        Structure[] structuresFor1 = {structure2, structure5};
-        Structure structure1 = new Structure(1, "Centrum Wykładowe", structuresFor1, null, null, null, null);
-
-        Structure[] structuresForMockMain = {structure1};
-        Structure mockMainStructure = new Structure(null, null, structuresForMockMain, null, null, null, null);
-
-        Structure mainStructure = this.structureRepository.getStructureInfo();
-        Assert.assertEquals(mockMainStructure.getId(), mainStructure.getId());
-        Assert.assertEquals(mockMainStructure.getName(), mainStructure.getName());
-        Assert.assertEquals(mockMainStructure.getStructures().count(), mainStructure.getStructures().count());
-        Assert.assertEquals(mockMainStructure.getArea(), mainStructure.getArea());
-        Assert.assertEquals(mockMainStructure.getCube(), mainStructure.getCube());
-        Assert.assertEquals(mockMainStructure.getHeating(), mainStructure.getHeating());
-        Assert.assertEquals(mockMainStructure.getLight(), mainStructure.getLight());
-    }
+    @Autowired
+    StructureRepository structureRepository;
 
     /**
      * Test method for getStructureInfo(String fileName). It checks if deserialized JSON is the same as the hard-coded one
@@ -77,7 +42,7 @@ public class StructureRepositoryTest {
         Structure[] structuresForMockMain = {structure1, structure5};
         Structure mockMainStructure = new Structure(0, "Chicken farm", structuresForMockMain, null, null, null, null);
 
-        Structure mainStructure = this.structureRepository.getStructureInfo("test_structures.json");
+        Structure mainStructure = this.structureRepository.getStructureInfo();
         Assert.assertEquals(mockMainStructure.getId(), mainStructure.getId());
         Assert.assertEquals(mockMainStructure.getName(), mainStructure.getName());
         Assert.assertEquals(mockMainStructure.getStructures().count(), mainStructure.getStructures().count());

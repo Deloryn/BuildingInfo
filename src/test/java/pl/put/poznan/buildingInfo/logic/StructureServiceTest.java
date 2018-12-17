@@ -1,30 +1,24 @@
 package pl.put.poznan.buildingInfo.logic;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * A class containing test methods for StructureService class
  */
+@SpringBootTest
+@RunWith(SpringRunner.class)
 public class StructureServiceTest {
 
     /**
      * An instance of the tested class
      */
-    private StructureService structureService;
-
-    /**
-     * A method that is executed before each test method.
-     * It prepares Structure Service and StructureRepository with test data (from test_structures.json)
-     */
-    @Before
-    public void setUp() {
-        StructureRepository structureRepository = new StructureRepository();
-        structureRepository.getStructureInfo("test_structures.json");
-        this.structureService = new StructureService();
-        this.structureService.setStructureRepository(structureRepository);
-    }
+    @Autowired
+    StructureService structureService;
 
     /**
      * Test method for findStructure. It should return Structure object or null if it does not exist
