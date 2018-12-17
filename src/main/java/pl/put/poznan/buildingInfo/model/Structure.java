@@ -1,6 +1,5 @@
 package pl.put.poznan.buildingInfo.model;
 
-import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -131,40 +130,5 @@ public class Structure {
             return 0.0;
         }
         else return this.light;
-    }
-
-    /**
-     * equals method. It compares this object with another object by value
-     * @param object an object to compare to
-     * @return true if objects have the same values; false otherwise
-     */
-    @Override
-    public boolean equals(Object object) {
-        if(object == null) return false;
-        if(object == this) return true;
-        if(!(object instanceof Structure)) return false;
-
-        Structure other = (Structure) object;
-
-        if(!Objects.equals(this.getId(), other.getId())) return false;
-        if(!Objects.equals(this.getName(), other.getName())) return false;
-        if(!Objects.equals(this.getArea(), other.getArea())) return false;
-        if(!Objects.equals(this.getCube(), other.getCube())) return false;
-        if(!Objects.equals(this.getHeating(), other.getHeating())) return false;
-        if(!Objects.equals(this.getLight(), other.getLight())) return false;
-
-        Object[] structuresFor1 = this.getStructures().toArray();
-        Object[] structuresFor2 = other.getStructures().toArray();
-
-        if(structuresFor1.length != structuresFor2.length) return false;
-        if(structuresFor1.length == 0) return true;
-        else {
-            for(int i=0; i<structuresFor1.length-1; i++) {
-                if(!structuresFor1[i+1].equals(structuresFor2[i+1])) {
-                    return false;
-                }
-            }
-            return true;
-        }
     }
 }
