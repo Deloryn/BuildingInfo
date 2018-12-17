@@ -1,6 +1,7 @@
 package pl.put.poznan.buildingInfo.logic;
 
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import pl.put.poznan.buildingInfo.model.Structure;
 
@@ -18,7 +19,8 @@ public class StructureRepository {
   /**
    * The filename of the JSON file
    */
-  private static final String FILE_NAME = "structures.json";
+  @Value("${datasource}")
+  private String fileName;
 
   /**
   * An instance of the main structure (which is a parent of all other structures)
@@ -67,7 +69,7 @@ public class StructureRepository {
     String path = null;
 
     try {
-      path = Paths.get(getClass().getClassLoader().getResource(FILE_NAME).toURI()).toString();
+      path = Paths.get(getClass().getClassLoader().getResource(fileName).toURI()).toString();
     } catch (Exception e) {
       return new byte[0];
     }
