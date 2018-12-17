@@ -40,10 +40,18 @@ public class StructureServiceTest {
   @Test
   public void getStructureAreaTest() {
     Assert.assertEquals((Double) 11280.0, structureService.getStructureArea(0));
-    Assert.assertEquals((Double) 0.0, structureService.getStructureArea(-2));
     Assert.assertEquals((Double) 11164.0, structureService.getStructureArea(5));
     Assert.assertEquals((Double) 116.0, structureService.getStructureArea(1));
     Assert.assertEquals((Double) 1240.0, structureService.getStructureArea(7));
+  }
+
+  /**
+   * Test method that checks if areas of non-existing structures are equal to 0
+   */
+  @Test
+  public void getStructureAreaForNotExistingStuctureTest() {
+    Assert.assertEquals((Double) 0.0, structureService.getStructureArea(-2));
+    Assert.assertEquals((Double) 0.0, structureService.getStructureArea(9));
   }
 
   /**
