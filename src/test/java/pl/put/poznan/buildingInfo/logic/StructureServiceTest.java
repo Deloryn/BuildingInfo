@@ -37,13 +37,14 @@ public class StructureServiceTest {
 
   /**
    * A private method to generate a test case
+   *
    * @return it returns the main structure (the owner of all the children)
    */
   private Structure generateTestMainStructure() {
     Structure structure3 = new Structure(3, "L053 BT", null, 123.34, 1002.43, 234.43, 467.54);
     Structure structure4 = new Structure(4, "CW 1", null, 83.34, 702.43, 134.43, 167.54);
 
-    Structure structure6 = new Structure(6, "CW 8", null,83.34, 772.43, 145.43, 154.54);
+    Structure structure6 = new Structure(6, "CW 8", null, 83.34, 772.43, 145.43, 154.54);
     Structure structure7 = new Structure(7, "CW 9", null, 83.34, 752.43, 187.43, 123.54);
 
     ArrayList<Structure> structuresFor2 = new ArrayList<>();
@@ -77,24 +78,31 @@ public class StructureServiceTest {
   }
 
   /**
-   * Test method for findStructure. It should return Structure object or null if it does not exist
+   * Test case for findStructure. It should return non-null Structure object
    */
   @Test
-  public void findStructureTest() {
-    Assert.assertNull(structureService.findStructure(27));
-    Assert.assertNull(structureService.findStructure(29));
-    Assert.assertNull(structureService.findStructure(-5));
-    Assert.assertNull(structureService.findStructure(-320));
+  public void findStructureForExistingStructuresTest() {
     Assert.assertNotNull(structureService.findStructure(1));
     Assert.assertNotNull(structureService.findStructure(6));
     Assert.assertNotNull(structureService.findStructure(5));
   }
 
   /**
+   * Test case for findStructure. It should return null
+   */
+  @Test
+  public void findStructureForNotExistingStructuresTest() {
+    Assert.assertNull(structureService.findStructure(27));
+    Assert.assertNull(structureService.findStructure(29));
+    Assert.assertNull(structureService.findStructure(-5));
+    Assert.assertNull(structureService.findStructure(-320));
+  }
+
+  /**
    * Test method that checks if areas of structures are calculated properly
    */
   @Test
-  public void getStructureAreaTest() {
+  public void getStructureAreaForExistingStructuresTest() {
     Assert.assertEquals((Double) 123.34, structureService.getStructureArea(3));
     Assert.assertEquals((Double) 166.68, structureService.getStructureArea(5));
     Assert.assertEquals((Double) 373.36, structureService.getStructureArea(1));
@@ -114,7 +122,7 @@ public class StructureServiceTest {
    * Test method that checks if cubes of structures are calculated properly
    */
   @Test
-  public void getStructureCubeTest() {
+  public void getStructureCubeForExistingStructuresTest() {
     Assert.assertEquals((Double) 772.43, structureService.getStructureCube(6));
     Assert.assertEquals((Double) 0.0, structureService.getStructureCube(-27));
     Assert.assertEquals((Double) 1524.86, structureService.getStructureCube(5));
@@ -122,51 +130,93 @@ public class StructureServiceTest {
   }
 
   /**
+   * Test method that checks if cubes of non-existing structures are equal to 0
+   */
+  @Test
+  public void getStructureCubeForNotExistingStructuresTest() {
+    Assert.assertEquals((Double) 0.0, structureService.getStructureCube(-27));
+    Assert.assertEquals((Double) 0.0, structureService.getStructureCube(0));
+    Assert.assertEquals((Double) 0.0, structureService.getStructureCube(10));
+  }
+
+  /**
    * Test method that checks if light of structures is calculated properly
    */
   @Test
-  public void getStructureLightTest() {
+  public void getStructureLightForExistingStructuresTest() {
     Assert.assertEquals((Double) 123.54, structureService.getStructureLight(7));
     Assert.assertEquals((Double) 913.16, structureService.getStructureLight(1), 0.0005);
     Assert.assertEquals((Double) 278.08, structureService.getStructureLight(5));
-    Assert.assertEquals((Double) 0.0, structureService.getStructureLight(-12));
     Assert.assertEquals((Double) 167.54, structureService.getStructureLight(4));
+  }
+
+  /**
+   * Test method that checks if lights of non-existing structures are equal to 0
+   */
+  @Test
+  public void getStructureLightForNotExistingStructuresTest() {
+    Assert.assertEquals((Double) 0.0, structureService.getStructureLight(-12));
+    Assert.assertEquals((Double) 0.0, structureService.getStructureLight(0));
+    Assert.assertEquals((Double) 0.0, structureService.getStructureLight(13));
   }
 
   /**
    * Test method that checks if heating of structures is calculated properly
    */
   @Test
-  public void getStructureHeatingTest() {
+  public void getStructureHeatingForExistingStructuresTest() {
     Assert.assertEquals((Double) 187.43, structureService.getStructureHeating(7));
     Assert.assertEquals((Double) 701.72, structureService.getStructureHeating(1));
-    Assert.assertEquals((Double) 0.0, structureService.getStructureHeating(-4));
     Assert.assertEquals((Double) 145.43, structureService.getStructureHeating(6));
     Assert.assertEquals((Double) 332.86, structureService.getStructureHeating(5));
+  }
+
+  /**
+   * Test method that checks if heatings of non-existing structures are equal to 0
+   */
+  @Test
+  public void getStructureHeatingForNotExistingStructuresTest() {
+    Assert.assertEquals((Double) 0.0, structureService.getStructureHeating(-4));
+    Assert.assertEquals((Double) 0.0, structureService.getStructureHeating(0));
+    Assert.assertEquals((Double) 0.0, structureService.getStructureHeating(31));
   }
 
   /**
    * Test method that checks if heating per cube of structures is calculated properly
    */
   @Test
-  public void getStructureHeatingPerCubeTest() {
-    Assert.assertEquals((Double) 0.0, structureService.getStructureHeatingPerCube(-1));
-    Assert.assertEquals(0.0, structureService.getStructureHeatingPerCube(0), 0.005);
+  public void getStructureHeatingPerCubeForExistingStructuresTest() {
     Assert.assertEquals(0.2172696, structureService.getStructureHeatingPerCube(1), 0.005);
     Assert.assertEquals(0.2182888, structureService.getStructureHeatingPerCube(5), 0.005);
     Assert.assertEquals(0.2490995, structureService.getStructureHeatingPerCube(7), 0.005);
   }
 
   /**
+   * Test method that checks if heatings per cube of non-existing structures are equal to 0
+   */
+  @Test
+  public void getStructureHeatingPerCubeForNotExistingStructuresTest() {
+    Assert.assertEquals((Double) 0.0, structureService.getStructureHeatingPerCube(-1));
+    Assert.assertEquals(0.0, structureService.getStructureHeatingPerCube(0), 0.005);
+  }
+
+  /**
    * Test method that checks if light per area of structures is calculated properly
    */
   @Test
-  public void getStructureLightPerAreaTest() {
-    Assert.assertEquals((Double) 0.0, structureService.getStructureLightPerArea(-4));
-    Assert.assertEquals(0.0, structureService.getStructureLightPerArea(0), 0.005);
+  public void getStructureLightPerAreaForExistingStructuresTest() {
     Assert.assertEquals(2.445789586, structureService.getStructureLightPerArea(1), 0.005);
     Assert.assertEquals(1.668346532, structureService.getStructureLightPerArea(5), 0.005);
     Assert.assertEquals((Double) 3.790659964, structureService.getStructureLightPerArea(3), 0.005);
+  }
+
+  /**
+   * Test method that checks if lights per area of non-existing structures are equal to 0
+   */
+  @Test
+  public void getStructureLightPerAreaForNotExistingStructuresTest() {
+    Assert.assertEquals((Double) 0.0, structureService.getStructureLightPerArea(-4));
+    Assert.assertEquals(0.0, structureService.getStructureLightPerArea(0), 0.005);
     Assert.assertEquals((Double) 0.0, structureService.getStructureLightPerArea(8));
   }
 
@@ -174,12 +224,38 @@ public class StructureServiceTest {
    * Test method that checks if the maintenance cost of structures is calculated properly
    */
   @Test
-  public void getMaintenanceCostTest() {
-    Assert.assertEquals(0.0, structureService.getMaintenanceCost(-3, 1.20), 0.005);
+  public void getMaintenanceCostForExistingStructuresTest() {
     Assert.assertEquals(0.0, structureService.getMaintenanceCost(5, 0.0), 0.005);
     Assert.assertEquals(220.9922, structureService.getMaintenanceCost(6, 1.43), 0.005);
     Assert.assertEquals(750.816, structureService.getMaintenanceCost(5, 2.70), 0.005);
-    Assert.assertEquals(0.0, structureService.getMaintenanceCost(1, null), 0.008);
+  }
+
+  /**
+   * Test method that checks if the maintenance costs of non-existing structures are equal to 0
+   */
+  @Test
+  public void getMaintenanceCostForNotExistingStructuresTest() {
+    Assert.assertEquals(0.0, structureService.getMaintenanceCost(-3, 1.20), 0.005);
     Assert.assertEquals(0.0, structureService.getMaintenanceCost(0, 1.50), 0.005);
+  }
+
+  /**
+   * Test method that checks when the price is null if the maintenance costs of non-existing structures are equal to 0
+   */
+  @Test
+  public void getMaintenanceCostForNotExistingStructuresWithNullPriceTest() {
+    Assert.assertEquals(0.0, structureService.getMaintenanceCost(-3, null), 0.005);
+    Assert.assertEquals(0.0, structureService.getMaintenanceCost(0, null), 0.005);
+  }
+
+  /**
+   * Test method that checks when the price null if the maintenance cost of existing structures are equal to 0
+   */
+  @Test
+  public void getMaintenanceCostForExistingStructuresWithNullPriceTest() {
+    Assert.assertEquals((Double) 0.0, structureService.getMaintenanceCost(5, null));
+    Assert.assertEquals((Double) 0.0, structureService.getMaintenanceCost(6, null));
+    Assert.assertEquals((Double) 0.0, structureService.getMaintenanceCost(5, null));
+    Assert.assertEquals((Double) 0.0, structureService.getMaintenanceCost(1, null));
   }
 }
