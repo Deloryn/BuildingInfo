@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.put.poznan.buildingInfo.model.Structure;
 
+import java.util.ArrayList;
+
 /**
  * A class containing test methods for StructureRepository class
  */
@@ -33,19 +35,27 @@ public class StructureRepositoryTest {
     Structure structure7 = new Structure(7, "Chicken Room 5", null, 1240.0, 1420.0, 15520.0, 9030.0);
     Structure structure8 = new Structure(8, "Chicken Room 6", null, 77.0, 543.0, 123.0, 0.0);
 
-    Structure[] structuresFor1 = {structure2, structure3, structure4};
+    ArrayList<Structure> structuresFor1 = new ArrayList<>();
+    structuresFor1.add(structure2);
+    structuresFor1.add(structure3);
+    structuresFor1.add(structure4);
     Structure structure1 = new Structure(1, "Chicken floor 1", structuresFor1, null, null, null, null);
 
-    Structure[] structuresFor5 = {structure6, structure7, structure8};
+    ArrayList<Structure> structuresFor5 = new ArrayList<>();
+    structuresFor5.add(structure6);
+    structuresFor5.add(structure7);
+    structuresFor5.add(structure8);
     Structure structure5 = new Structure(5, "Chicken floor 2", structuresFor5, null, null, null, null);
 
-    Structure[] structuresForMockMain = {structure1, structure5};
+    ArrayList<Structure> structuresForMockMain = new ArrayList<>();
+    structuresForMockMain.add(structure1);
+    structuresForMockMain.add(structure5);
     Structure mockMainStructure = new Structure(0, "Chicken farm", structuresForMockMain, null, null, null, null);
 
     Structure mainStructure = this.structureRepository.getStructureInfo();
     Assert.assertEquals(mockMainStructure.getId(), mainStructure.getId());
     Assert.assertEquals(mockMainStructure.getName(), mainStructure.getName());
-    Assert.assertEquals(mockMainStructure.getStructures().count(), mainStructure.getStructures().count());
+    Assert.assertEquals(mockMainStructure.getStructures().size(), mainStructure.getStructures().size());
     Assert.assertEquals(mockMainStructure.getArea(), mainStructure.getArea());
     Assert.assertEquals(mockMainStructure.getCube(), mainStructure.getCube());
     Assert.assertEquals(mockMainStructure.getHeating(), mainStructure.getHeating());

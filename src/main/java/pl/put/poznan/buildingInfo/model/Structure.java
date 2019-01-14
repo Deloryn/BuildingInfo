@@ -1,6 +1,6 @@
 package pl.put.poznan.buildingInfo.model;
 
-import java.util.stream.Stream;
+import java.util.ArrayList;
 
 /**
  * A class for any type of structure - for buildings, floors, rooms, etc.
@@ -18,7 +18,7 @@ public class Structure {
   /**
    * An array of its children structures
    */
-  private Structure[] structures;
+  private ArrayList<Structure> structures;
   /**
    * Area of the structure
    */
@@ -47,7 +47,7 @@ public class Structure {
    * @param heating    heating of the structure
    * @param light      light of the structure
    */
-  public Structure(Integer id, String name, Structure[] structures, Double area, Double cube, Double heating, Double light) {
+  public Structure(Integer id, String name, ArrayList<Structure> structures, Double area, Double cube, Double heating, Double light) {
     this.id = id;
     this.name = name;
     this.structures = structures;
@@ -58,14 +58,53 @@ public class Structure {
   }
 
   /**
+   * Based on recursion function that returns structure by id
+   *
+   * @return structure with given id or null if neither this structure nor any of its descendant has given id
+   */
+  public Structure getStructureById(Integer id) {
+    if (id.equals(this.id)) {
+      return this;
+    }
+
+    if (structures != null) {
+      for (Structure structure : structures) {
+        Structure nestedStructure = structure.getStructureById(id);
+        if (nestedStructure != null) {
+          return nestedStructure;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Based on recursion function that removes structure by id
+   *
+   * @return true on success, false on failure
+   */
+  public Boolean removeStructureById(Integer id) {
+    if (structures != null) {
+      for (Structure structure : structures) {
+        if (id.equals(structure.id)) {
+          structures.remove(structure);
+          return true;
+        }
+        if (structure.removeStructureById(id)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
    * Getter of id
    *
    * @return id of the structure or -1 if it doesn't have one
    */
   public Integer getId() {
-    if (this.id == null) {
-      return -1;
-    }
     return this.id;
   }
 
@@ -79,60 +118,63 @@ public class Structure {
   }
 
   /**
-   * Getter of structures (this structure and all its children)
+   * Getter of structures
    *
-   * @return a stream containing this structure and all its children (flatmapped into single stream)
+   * @return an array of children structures
    */
-  public Stream<Structure> getStructures() {
-    if (this.structures == null) {
-      return Stream.of(this);
-    } else {
-      return Stream.concat(Stream.of(this), Stream.of(this.structures).flatMap(Structure::getStructures));
-    }
+  public ArrayList<Structure> getStructures() {
+    return structures;
   }
 
   /**
    * Getter of area
    *
-   * @return area of the structure or 0.0 if it doesn't have one
+   * @return total area of the structure, including nested structures
    */
   public Double getArea() {
-    if (this.area == null) {
-      return 0.0;
+    if (this.structures == null) {
+      return this.area;
     }
-    return this.area;
+
+    return structures.stream().map(Structure::getArea).reduce(0.0, Double::sum);
   }
 
   /**
    * Getter of cube
    *
-   * @return cube of the structure or 0.0 if it doesn't have one
+   * @return total area of the structure, including nested structures
    */
   public Double getCube() {
-    if (this.cube == null) {
-      return 0.0;
-    } else return this.cube;
+    if (this.structures == null) {
+      return this.cube;
+    }
+
+    return structures.stream().map(Structure::getCube).reduce(0.0, Double::sum);
   }
 
   /**
    * Getter of heating
    *
-   * @return heating of the structure or 0.0 if it doesn't have one
+   * @return total heating of the structure, including nested structures
    */
   public Double getHeating() {
-    if (this.heating == null) {
-      return 0.0;
-    } else return this.heating;
+    if (this.structures == null) {
+      return this.heating;
+    }
+
+    return structures.stream().map(Structure::getHeating).reduce(0.0, Double::sum);
   }
 
   /**
    * Getter of light
    *
-   * @return light of the structure or 0.0 if it doesn't have one
+   * @return total light of the structure, including nested structures
    */
   public Double getLight() {
-    if (this.light == null) {
-      return 0.0;
-    } else return this.light;
+    if (this.structures == null) {
+      return this.light;
+    }
+
+    return structures.stream().map(Structure::getLight).reduce(0.0, Double::sum);
   }
 }
