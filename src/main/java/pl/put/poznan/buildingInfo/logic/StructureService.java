@@ -55,7 +55,8 @@ public class StructureService {
    */
   public Double getStructureArea(Integer id) {
     Structure structure = findStructure(id);
-    return structure.getArea();
+    if(structure == null) return 0.0;
+    else return structure.getArea();
   }
 
   /**
@@ -66,7 +67,8 @@ public class StructureService {
    */
   public Double getStructureCube(Integer id) {
     Structure structure = findStructure(id);
-    return structure.getCube();
+    if(structure == null) return 0.0;
+    else return structure.getCube();
   }
 
   /**
@@ -77,7 +79,8 @@ public class StructureService {
    */
   public Double getStructureLight(Integer id) {
     Structure structure = findStructure(id);
-    return structure.getLight();
+    if(structure == null) return 0.0;
+    else return structure.getLight();
   }
 
   /**
@@ -88,7 +91,8 @@ public class StructureService {
    */
   public Double getStructureHeating(Integer id) {
     Structure structure = findStructure(id);
-    return structure.getHeating();
+    if(structure == null) return 0.0;
+    else return structure.getHeating();
   }
 
   /**
