@@ -37,13 +37,14 @@ public class StructureServiceTest {
 
   /**
    * A private method to generate a test case
+   *
    * @return it returns the main structure (the owner of all the children)
    */
   private Structure generateTestMainStructure() {
     Structure structure3 = new Structure(3, "L053 BT", null, 123.34, 1002.43, 234.43, 467.54);
     Structure structure4 = new Structure(4, "CW 1", null, 83.34, 702.43, 134.43, 167.54);
 
-    Structure structure6 = new Structure(6, "CW 8", null,83.34, 772.43, 145.43, 154.54);
+    Structure structure6 = new Structure(6, "CW 8", null, 83.34, 772.43, 145.43, 154.54);
     Structure structure7 = new Structure(7, "CW 9", null, 83.34, 752.43, 187.43, 123.54);
 
     ArrayList<Structure> structuresFor2 = new ArrayList<>();
@@ -257,7 +258,4 @@ public class StructureServiceTest {
     Assert.assertEquals((Double) 0.0, structureService.getMaintenanceCost(5, null));
     Assert.assertEquals((Double) 0.0, structureService.getMaintenanceCost(1, null));
   }
-
-
-
 }
