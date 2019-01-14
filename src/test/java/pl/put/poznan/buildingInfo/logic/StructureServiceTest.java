@@ -1,11 +1,21 @@
 package pl.put.poznan.buildingInfo.logic;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import pl.put.poznan.buildingInfo.model.Structure;
+
+import static org.mockito.Mockito.*;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
 
 /**
  * A class containing test methods for StructureService class
@@ -14,11 +24,57 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 public class StructureServiceTest {
 
+  @Mock
+  private StructureRepository structureRepository;
+
   /**
    * An instance of the tested class
    */
   @Autowired
+  @InjectMocks
+  @Resource
   StructureService structureService;
+
+  /**
+   * A private method to generate a test case
+   * @return it returns the main structure (the owner of all the children)
+   */
+  private Structure generateTestMainStructure() {
+    Structure structure3 = new Structure(3, "L053 BT", null, 123.34, 1002.43, 234.43, 467.54);
+    Structure structure4 = new Structure(4, "CW 1", null, 83.34, 702.43, 134.43, 167.54);
+
+    Structure structure6 = new Structure(6, "CW 8", null,83.34, 772.43, 145.43, 154.54);
+    Structure structure7 = new Structure(7, "CW 9", null, 83.34, 752.43, 187.43, 123.54);
+
+    ArrayList<Structure> structuresFor2 = new ArrayList<>();
+    structuresFor2.add(structure3);
+    structuresFor2.add(structure4);
+
+    ArrayList<Structure> structuresFor5 = new ArrayList<>();
+    structuresFor5.add(structure6);
+    structuresFor5.add(structure7);
+
+    Structure structure2 = new Structure(2, null, structuresFor2, null, null, null, null);
+    Structure structure5 = new Structure(5, null, structuresFor5, null, null, null, null);
+
+    ArrayList<Structure> structuresFor1 = new ArrayList<>();
+    structuresFor1.add(structure2);
+    structuresFor1.add(structure5);
+
+    Structure structure1 = new Structure(1, "Centrum Wykładowe", structuresFor1, null, null, null, null);
+
+    ArrayList<Structure> structuresForMain = new ArrayList<>();
+    structuresForMain.add(structure1);
+
+    return new Structure(null, null, structuresForMain, null, null, null, null);
+  }
+
+  @Before
+  public void setUp() {
+    Structure mainStructure = generateTestMainStructure();
+    MockitoAnnotations.initMocks(this);
+    when(structureRepository.getStructureInfo()).thenReturn(mainStructure);
+  }
 
   /**
    * Test method for findStructure. It should return Structure object or null if it does not exist
@@ -29,7 +85,7 @@ public class StructureServiceTest {
     Assert.assertNull(structureService.findStructure(29));
     Assert.assertNull(structureService.findStructure(-5));
     Assert.assertNull(structureService.findStructure(-320));
-    Assert.assertNotNull(structureService.findStructure(0));
+    Assert.assertNotNull(structureService.findStructure(1));
     Assert.assertNotNull(structureService.findStructure(6));
     Assert.assertNotNull(structureService.findStructure(5));
   }
@@ -39,10 +95,10 @@ public class StructureServiceTest {
    */
   @Test
   public void getStructureAreaTest() {
-    Assert.assertEquals((Double) 11280.0, structureService.getStructureArea(0));
-    Assert.assertEquals((Double) 11164.0, structureService.getStructureArea(5));
-    Assert.assertEquals((Double) 116.0, structureService.getStructureArea(1));
-    Assert.assertEquals((Double) 1240.0, structureService.getStructureArea(7));
+    Assert.assertEquals((Double) 123.34, structureService.getStructureArea(3));
+    Assert.assertEquals((Double) 166.68, structureService.getStructureArea(5));
+    Assert.assertEquals((Double) 373.36, structureService.getStructureArea(1));
+    Assert.assertEquals((Double) 83.34, structureService.getStructureArea(7));
   }
 
   /**
@@ -59,10 +115,10 @@ public class StructureServiceTest {
    */
   @Test
   public void getStructureCubeTest() {
-    Assert.assertEquals((Double) 22322.0, structureService.getStructureCube(0));
+    Assert.assertEquals((Double) 772.43, structureService.getStructureCube(6));
     Assert.assertEquals((Double) 0.0, structureService.getStructureCube(-27));
-    Assert.assertEquals((Double) 22198.0, structureService.getStructureCube(5));
-    Assert.assertEquals((Double) 20235.0, structureService.getStructureCube(6));
+    Assert.assertEquals((Double) 1524.86, structureService.getStructureCube(5));
+    Assert.assertEquals((Double) 752.43, structureService.getStructureCube(7));
   }
 
   /**
@@ -70,11 +126,11 @@ public class StructureServiceTest {
    */
   @Test
   public void getStructureLightTest() {
-    Assert.assertEquals((Double) 365.0, structureService.getStructureLight(1));
-    Assert.assertEquals((Double) 12416.0, structureService.getStructureLight(0));
-    Assert.assertEquals((Double) 12051.0, structureService.getStructureLight(5));
+    Assert.assertEquals((Double) 123.54, structureService.getStructureLight(7));
+    Assert.assertEquals((Double) 913.16, structureService.getStructureLight(1), 0.0005);
+    Assert.assertEquals((Double) 278.08, structureService.getStructureLight(5));
     Assert.assertEquals((Double) 0.0, structureService.getStructureLight(-12));
-    Assert.assertEquals((Double) 290.0, structureService.getStructureLight(4));
+    Assert.assertEquals((Double) 167.54, structureService.getStructureLight(4));
   }
 
   /**
@@ -82,11 +138,11 @@ public class StructureServiceTest {
    */
   @Test
   public void getStructureHeatingTest() {
-    Assert.assertEquals((Double) 24189.0, structureService.getStructureHeating(0));
-    Assert.assertEquals((Double) 7296.0, structureService.getStructureHeating(1));
+    Assert.assertEquals((Double) 187.43, structureService.getStructureHeating(7));
+    Assert.assertEquals((Double) 701.72, structureService.getStructureHeating(1));
     Assert.assertEquals((Double) 0.0, structureService.getStructureHeating(-4));
-    Assert.assertEquals((Double) 1250.0, structureService.getStructureHeating(6));
-    Assert.assertEquals((Double) 16893.0, structureService.getStructureHeating(5));
+    Assert.assertEquals((Double) 145.43, structureService.getStructureHeating(6));
+    Assert.assertEquals((Double) 332.86, structureService.getStructureHeating(5));
   }
 
   /**
@@ -95,10 +151,10 @@ public class StructureServiceTest {
   @Test
   public void getStructureHeatingPerCubeTest() {
     Assert.assertEquals((Double) 0.0, structureService.getStructureHeatingPerCube(-1));
-    Assert.assertEquals(1.083639459, structureService.getStructureHeatingPerCube(0), 0.005);
-    Assert.assertEquals(58.838709677, structureService.getStructureHeatingPerCube(1), 0.005);
-    Assert.assertEquals(0.761014506, structureService.getStructureHeatingPerCube(5), 0.005);
-    Assert.assertEquals(10.929577465, structureService.getStructureHeatingPerCube(7), 0.005);
+    Assert.assertEquals(0.0, structureService.getStructureHeatingPerCube(0), 0.005);
+    Assert.assertEquals(0.2172696, structureService.getStructureHeatingPerCube(1), 0.005);
+    Assert.assertEquals(0.2182888, structureService.getStructureHeatingPerCube(5), 0.005);
+    Assert.assertEquals(0.2490995, structureService.getStructureHeatingPerCube(7), 0.005);
   }
 
   /**
@@ -107,10 +163,10 @@ public class StructureServiceTest {
   @Test
   public void getStructureLightPerAreaTest() {
     Assert.assertEquals((Double) 0.0, structureService.getStructureLightPerArea(-4));
-    Assert.assertEquals(1.10070922, structureService.getStructureLightPerArea(0), 0.005);
-    Assert.assertEquals(3.146551724, structureService.getStructureLightPerArea(1), 0.005);
-    Assert.assertEquals(1.079451809, structureService.getStructureLightPerArea(5), 0.005);
-    Assert.assertEquals((Double) 3.0, structureService.getStructureLightPerArea(3));
+    Assert.assertEquals(0.0, structureService.getStructureLightPerArea(0), 0.005);
+    Assert.assertEquals(2.445789586, structureService.getStructureLightPerArea(1), 0.005);
+    Assert.assertEquals(1.668346532, structureService.getStructureLightPerArea(5), 0.005);
+    Assert.assertEquals((Double) 3.790659964, structureService.getStructureLightPerArea(3), 0.005);
     Assert.assertEquals((Double) 0.0, structureService.getStructureLightPerArea(8));
   }
 
@@ -121,9 +177,9 @@ public class StructureServiceTest {
   public void getMaintenanceCostTest() {
     Assert.assertEquals(0.0, structureService.getMaintenanceCost(-3, 1.20), 0.005);
     Assert.assertEquals(0.0, structureService.getMaintenanceCost(5, 0.0), 0.005);
-    Assert.assertEquals(4320.03, structureService.getMaintenanceCost(6, 1.43), 0.005);
-    Assert.assertEquals(32537.7, structureService.getMaintenanceCost(5, 2.70), 0.005);
-    Assert.assertEquals(985.5, structureService.getMaintenanceCost(1, 2.70), 0.008);
-    Assert.assertEquals(18624.0, structureService.getMaintenanceCost(0, 1.50), 0.005);
+    Assert.assertEquals(220.9922, structureService.getMaintenanceCost(6, 1.43), 0.005);
+    Assert.assertEquals(750.816, structureService.getMaintenanceCost(5, 2.70), 0.005);
+    Assert.assertEquals(0.0, structureService.getMaintenanceCost(1, null), 0.008);
+    Assert.assertEquals(0.0, structureService.getMaintenanceCost(0, 1.50), 0.005);
   }
 }
