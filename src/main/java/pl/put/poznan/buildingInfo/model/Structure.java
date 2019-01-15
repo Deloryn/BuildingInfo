@@ -80,18 +80,18 @@ public class Structure {
   }
 
   /**
-   * Based on recursion function that removes structure by id
+   * Based on recursion function that deletes structure by id
    *
    * @return true on success, false on failure
    */
-  public Boolean removeStructureById(Integer id) {
+  public Boolean deleteStructureById(Integer id) {
     if (structures != null) {
       for (Structure structure : structures) {
         if (id.equals(structure.id)) {
           structures.remove(structure);
           return true;
         }
-        if (structure.removeStructureById(id)) {
+        if (structure.deleteStructureById(id)) {
           return true;
         }
       }
