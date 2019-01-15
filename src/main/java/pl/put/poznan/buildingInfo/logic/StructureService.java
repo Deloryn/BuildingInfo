@@ -39,12 +39,17 @@ public class StructureService {
   }
 
   /**
-   * Remove the structure with given id
+   * Delete the structure with given id
    *
    * @param id id of the structure
    */
-  public Boolean removeStructure(Integer id) {
-    return structureRepository.getStructureInfo().removeStructureById(id);
+  public Boolean deleteStructure(Integer id) {
+    Structure structureInfo = structureRepository.getStructureInfo();
+    Boolean wasSuccessful = structureInfo.deleteStructureById(id);
+    if (wasSuccessful) {
+      structureRepository.saveStructureInfo(structureInfo);
+    }
+    return wasSuccessful;
   }
 
   /**
@@ -55,7 +60,7 @@ public class StructureService {
    */
   public Double getStructureArea(Integer id) {
     Structure structure = findStructure(id);
-    if(structure == null) return 0.0;
+    if (structure == null) return 0.0;
     else return structure.getArea();
   }
 
@@ -67,7 +72,7 @@ public class StructureService {
    */
   public Double getStructureCube(Integer id) {
     Structure structure = findStructure(id);
-    if(structure == null) return 0.0;
+    if (structure == null) return 0.0;
     else return structure.getCube();
   }
 
@@ -79,7 +84,7 @@ public class StructureService {
    */
   public Double getStructureLight(Integer id) {
     Structure structure = findStructure(id);
-    if(structure == null) return 0.0;
+    if (structure == null) return 0.0;
     else return structure.getLight();
   }
 
@@ -91,7 +96,7 @@ public class StructureService {
    */
   public Double getStructureHeating(Integer id) {
     Structure structure = findStructure(id);
-    if(structure == null) return 0.0;
+    if (structure == null) return 0.0;
     else return structure.getHeating();
   }
 

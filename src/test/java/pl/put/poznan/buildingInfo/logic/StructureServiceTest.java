@@ -12,10 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.put.poznan.buildingInfo.model.Structure;
 
-import static org.mockito.Mockito.*;
-
 import javax.annotation.Resource;
 import java.util.ArrayList;
+
+import static org.mockito.Mockito.*;
 
 /**
  * A class containing test methods for StructureService class
@@ -257,5 +257,34 @@ public class StructureServiceTest {
     Assert.assertEquals((Double) 0.0, structureService.getMaintenanceCost(6, null));
     Assert.assertEquals((Double) 0.0, structureService.getMaintenanceCost(5, null));
     Assert.assertEquals((Double) 0.0, structureService.getMaintenanceCost(1, null));
+  }
+
+  /**
+   * Test case for deleteStructure. It should return false on failure
+   */
+  @Test
+  public void deleteStructureForNotExistingStructuresTest() {
+    Structure structureInfoBefore = structureRepository.getStructureInfo();
+    Boolean wasSuccessful1 = structureService.deleteStructure(27);
+    Boolean wasSuccessful2 = structureService.deleteStructure(-5);
+    Structure structureInfoAfter = structureRepository.getStructureInfo();
+
+    Assert.assertFalse(wasSuccessful1);
+    Assert.assertFalse(wasSuccessful2);
+    Assert.assertEquals(structureInfoBefore, structureInfoAfter);
+  }
+
+  /**
+   * Test case for deleteStructure. It should return true on success
+   */
+  @Test
+  public void deleteStructureForExistingStructuresTest() {
+    Boolean wasSuccessful = structureService.deleteStructure(1);
+    verify(structureRepository, times(1)).getStructureInfo();
+    verify(structureRepository, times(1)).saveStructureInfo(any(Structure.class));
+
+    Structure structureInfoAfter = structureRepository.getStructureInfo();
+    Assert.assertEquals(0, structureInfoAfter.getStructures().size());
+    Assert.assertTrue(wasSuccessful);
   }
 }

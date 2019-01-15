@@ -45,6 +45,28 @@ public class StructureController {
   }
 
   /**
+   * A handler for delete structure requests
+   *
+   * @param structureId id of the structure to delete
+   * @return ResponseEntity with 204 code for successful delete and 404 code for not found
+   */
+  @RequestMapping(value = "/{structureId}", method = RequestMethod.DELETE)
+  public ResponseEntity deleteStructure(@PathVariable Integer structureId) {
+
+    LOGGER.debug(structureId.toString());
+    LOGGER.info("Delete structure. Structure id: " + structureId.toString());
+
+    Boolean wasSuccessful = structureService.deleteStructure(structureId);
+    LOGGER.debug("Delete successful?: " + wasSuccessful);
+
+    if (!wasSuccessful) {
+      return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
+
+    return new ResponseEntity(HttpStatus.NO_CONTENT);
+  }
+
+  /**
    * A handler for structure area requests
    *
    * @param structureId id of the requested structure
