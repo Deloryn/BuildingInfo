@@ -1,6 +1,8 @@
 package pl.put.poznan.buildingInfo.model;
 
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * A class for any type of structure - for buildings, floors, rooms, etc.
@@ -55,6 +57,22 @@ public class Structure {
     this.cube = cube;
     this.heating = heating;
     this.light = light;
+  }
+
+  /**
+   * A private constructor for copying
+   *
+   * @param structure  base for constructed Structure
+   * @param structures children structures of the structure
+   */
+  private Structure(Structure structure, ArrayList<Structure> structures) {
+    this.id = structure.getId();
+    this.name = structure.getName();
+    this.structures = structures;
+    this.area = structure.getArea();
+    this.cube = structure.getCube();
+    this.heating = structure.getHeating();
+    this.light = structure.getLight();
   }
 
   /**
@@ -176,5 +194,54 @@ public class Structure {
     }
 
     return structures.stream().map(Structure::getLight).reduce(0.0, Double::sum);
+  }
+
+  /**
+   * Calculate heating energy per cube for the whole structure
+   *
+   * @return heating energy per cube of the whole structure
+   */
+  public Double getStructureHeatingPerCube() {
+    Double heating = this.getHeating();
+    Double cube = this.getCube();
+    if (cube > 0) return heating / cube;
+    else return 0.0;
+  }
+
+  /**
+   * Calculate light per area for the whole structure
+   *
+   * @return light per area for the whole structure
+   */
+  public Double getStructureLightPerArea() {
+    Double light = this.getLight();
+    Double area = this.getArea();
+    if (area > 0) return light / area;
+    else return 0.0;
+  }
+
+  /**
+   * Method that returns structure if its room have heating per cube higher than given
+   *
+   * @param threshold
+   * @return structure with rooms that have heating per cube higher than threshold
+   */
+  public Structure getStructuresWithHeatingPerCubeExceeded(Double threshold) {
+    if (this.structures == null) {
+      if (this.getStructureHeatingPerCube() > threshold) {
+        return this;
+      } else {
+        return null;
+      }
+    }
+    ArrayList<Structure> filteredStructures = structures.stream()
+            .map(s -> s.getStructuresWithHeatingPerCubeExceeded(threshold))
+            .filter(Objects::nonNull)
+            .collect(Collectors.toCollection(ArrayList::new));
+
+    if (filteredStructures.size() > 0) {
+      return new Structure(this, filteredStructures);
+    }
+    return null;
   }
 }

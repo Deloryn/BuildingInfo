@@ -12,7 +12,7 @@
               "name": "L053 BT",
               "area": 123.34,
               "cube": 1002.43,
-              "heating": 234.43,
+              "heating": 2340.43,
               "light": 467.54
             },
             {
@@ -20,7 +20,7 @@
               "name": "CW 1",
               "area": 83.34,
               "cube": 702.43,
-              "heating": 134.43,
+              "heating": 1340.43,
               "light": 167.54
             }
           ]
@@ -33,7 +33,7 @@
               "name": "CW 8",
               "area": 83.34,
               "cube": 772.43,
-              "heating": 145.43,
+              "heating": 1450.43,
               "light": 154.54
             },
             {
@@ -41,7 +41,7 @@
               "name": "CW 9",
               "area": 83.34,
               "cube": 752.43,
-              "heating": 187.43,
+              "heating": 1870.43,
               "light": 123.54
             }
           ]
