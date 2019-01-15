@@ -20,15 +20,6 @@ public class StructureService {
   StructureRepository structureRepository;
 
   /**
-   * Get all structures
-   *
-   * @return an array of all structures
-   */
-  public ArrayList<Structure> getAllStructures() {
-    return structureRepository.getStructureInfo().getStructures();
-  }
-
-  /**
    * Find the structure with given id
    *
    * @param id id of the structure
@@ -101,29 +92,27 @@ public class StructureService {
   }
 
   /**
-   * Calculate heating energy per cube for the whole structure with given id
+   * Get heating energy per cube for the whole structure with given id
    *
    * @param id id of the structure
    * @return heating energy per cube of the whole structure
    */
   public Double getStructureHeatingPerCube(Integer id) {
-    Double heating = getStructureHeating(id);
-    Double cube = getStructureCube(id);
-    if (cube > 0) return heating / cube;
-    else return 0.0;
+    Structure structure = findStructure(id);
+    if (structure == null) return 0.0;
+    else return structure.getStructureHeatingPerCube();
   }
 
   /**
-   * Calculate light per area for the whole structure with given id
+   * Get light per area for the whole structure with given id
    *
    * @param id id of the structure
    * @return light per area for the whole structure with given id
    */
   public Double getStructureLightPerArea(Integer id) {
-    Double light = getStructureLight(id);
-    Double area = getStructureArea(id);
-    if (area > 0) return light / area;
-    else return 0.0;
+    Structure structure = findStructure(id);
+    if (structure == null) return 0.0;
+    else return structure.getStructureLightPerArea();
   }
 
   /**
@@ -139,4 +128,17 @@ public class StructureService {
     return light * unitPrice;
   }
 
+  /**
+   * Get structures with rooms with heating per cube higher than given
+   *
+   * @param threshold given heating per cube value
+   * @return structures with rooms with heating per cube higher than threshold
+   */
+  public ArrayList<Structure> getStructuresWithHeatingPerCubeExceeded(Double threshold) {
+    Structure foundStructure = structureRepository.getStructureInfo().getStructuresWithHeatingPerCubeExceeded(threshold);
+    if(foundStructure != null){
+      return foundStructure.getStructures();
+    }
+    return new ArrayList<>();
+  }
 }

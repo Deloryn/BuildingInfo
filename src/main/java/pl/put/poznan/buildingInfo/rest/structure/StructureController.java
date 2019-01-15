@@ -31,17 +31,18 @@ public class StructureController {
   StructureService structureService;
 
   /**
-   * A handler for all structure requests
+   * A handler for structure with rooms with higher heating per cube than given
    *
-   * @return all structures
+   * @param threshold given heating per cube value
+   * @return structures with rooms with heating per cube higher than threshold
    */
-  @RequestMapping("/all")
-  public ResponseEntity<ArrayList<Structure>> getAllStructures() {
+  @RequestMapping("/heatingPerCubeGreaterThan/{threshold}")
+  public ResponseEntity<ArrayList<Structure>> getStructuresWithHeatingPerCubeExceed(@PathVariable Double threshold) {
 
-    LOGGER.info("Get all structures");
+    LOGGER.info("Get structures with rooms with heating per cube greater than: " + threshold);
 
-    ArrayList<Structure> allStructures = structureService.getAllStructures();
-    return new ResponseEntity<>(allStructures, HttpStatus.OK);
+    ArrayList<Structure> structures = structureService.getStructuresWithHeatingPerCubeExceeded(threshold);
+    return new ResponseEntity<>(structures, HttpStatus.OK);
   }
 
   /**

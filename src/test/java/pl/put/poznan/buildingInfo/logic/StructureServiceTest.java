@@ -202,7 +202,7 @@ public class StructureServiceTest {
     Assert.assertEquals(0.2172696, structureService.getStructureHeatingPerCube(1), 0.005);
     Assert.assertEquals(0.2182888, structureService.getStructureHeatingPerCube(5), 0.005);
     Assert.assertEquals(0.2490995, structureService.getStructureHeatingPerCube(7), 0.005);
-    verify(structureRepository, times(6)).getStructureInfo();
+    verify(structureRepository, times(3)).getStructureInfo();
   }
 
   /**
@@ -212,7 +212,7 @@ public class StructureServiceTest {
   public void getStructureHeatingPerCubeForNotExistingStructuresTest() {
     Assert.assertEquals((Double) 0.0, structureService.getStructureHeatingPerCube(-1));
     Assert.assertEquals(0.0, structureService.getStructureHeatingPerCube(0), 0.005);
-    verify(structureRepository, times(4)).getStructureInfo();
+    verify(structureRepository, times(2)).getStructureInfo();
   }
 
   /**
@@ -223,7 +223,7 @@ public class StructureServiceTest {
     Assert.assertEquals(2.445789586, structureService.getStructureLightPerArea(1), 0.005);
     Assert.assertEquals(1.668346532, structureService.getStructureLightPerArea(5), 0.005);
     Assert.assertEquals((Double) 3.790659964, structureService.getStructureLightPerArea(3), 0.005);
-    verify(structureRepository, times(6)).getStructureInfo();
+    verify(structureRepository, times(3)).getStructureInfo();
   }
 
   /**
@@ -234,7 +234,7 @@ public class StructureServiceTest {
     Assert.assertEquals((Double) 0.0, structureService.getStructureLightPerArea(-4));
     Assert.assertEquals(0.0, structureService.getStructureLightPerArea(0), 0.005);
     Assert.assertEquals((Double) 0.0, structureService.getStructureLightPerArea(8));
-    verify(structureRepository, times(6)).getStructureInfo();
+    verify(structureRepository, times(3)).getStructureInfo();
   }
 
   /**
