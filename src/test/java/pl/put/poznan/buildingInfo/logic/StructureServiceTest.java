@@ -24,6 +24,9 @@ import java.util.ArrayList;
 @RunWith(SpringRunner.class)
 public class StructureServiceTest {
 
+  /**
+   * An instance of the mocked structure repository (to inject into structure service)
+   */
   @Mock
   private StructureRepository structureRepository;
 
@@ -85,6 +88,7 @@ public class StructureServiceTest {
     Assert.assertNotNull(structureService.findStructure(1));
     Assert.assertNotNull(structureService.findStructure(6));
     Assert.assertNotNull(structureService.findStructure(5));
+    verify(structureRepository, times(3)).getStructureInfo();
   }
 
   /**
@@ -96,6 +100,7 @@ public class StructureServiceTest {
     Assert.assertNull(structureService.findStructure(29));
     Assert.assertNull(structureService.findStructure(-5));
     Assert.assertNull(structureService.findStructure(-320));
+    verify(structureRepository, times(4)).getStructureInfo();
   }
 
   /**
@@ -107,6 +112,7 @@ public class StructureServiceTest {
     Assert.assertEquals((Double) 166.68, structureService.getStructureArea(5));
     Assert.assertEquals((Double) 373.36, structureService.getStructureArea(1));
     Assert.assertEquals((Double) 83.34, structureService.getStructureArea(7));
+    verify(structureRepository, times(4)).getStructureInfo();
   }
 
   /**
@@ -116,6 +122,7 @@ public class StructureServiceTest {
   public void getStructureAreaForNotExistingStuctureTest() {
     Assert.assertEquals((Double) 0.0, structureService.getStructureArea(-2));
     Assert.assertEquals((Double) 0.0, structureService.getStructureArea(9));
+    verify(structureRepository, times(2)).getStructureInfo();
   }
 
   /**
@@ -127,6 +134,7 @@ public class StructureServiceTest {
     Assert.assertEquals((Double) 0.0, structureService.getStructureCube(-27));
     Assert.assertEquals((Double) 1524.86, structureService.getStructureCube(5));
     Assert.assertEquals((Double) 752.43, structureService.getStructureCube(7));
+    verify(structureRepository, times(4)).getStructureInfo();
   }
 
   /**
@@ -137,6 +145,7 @@ public class StructureServiceTest {
     Assert.assertEquals((Double) 0.0, structureService.getStructureCube(-27));
     Assert.assertEquals((Double) 0.0, structureService.getStructureCube(0));
     Assert.assertEquals((Double) 0.0, structureService.getStructureCube(10));
+    verify(structureRepository, times(3)).getStructureInfo();
   }
 
   /**
@@ -148,6 +157,7 @@ public class StructureServiceTest {
     Assert.assertEquals((Double) 913.16, structureService.getStructureLight(1), 0.0005);
     Assert.assertEquals((Double) 278.08, structureService.getStructureLight(5));
     Assert.assertEquals((Double) 167.54, structureService.getStructureLight(4));
+    verify(structureRepository, times(4)).getStructureInfo();
   }
 
   /**
@@ -158,6 +168,7 @@ public class StructureServiceTest {
     Assert.assertEquals((Double) 0.0, structureService.getStructureLight(-12));
     Assert.assertEquals((Double) 0.0, structureService.getStructureLight(0));
     Assert.assertEquals((Double) 0.0, structureService.getStructureLight(13));
+    verify(structureRepository, times(3)).getStructureInfo();
   }
 
   /**
@@ -169,6 +180,7 @@ public class StructureServiceTest {
     Assert.assertEquals((Double) 701.72, structureService.getStructureHeating(1));
     Assert.assertEquals((Double) 145.43, structureService.getStructureHeating(6));
     Assert.assertEquals((Double) 332.86, structureService.getStructureHeating(5));
+    verify(structureRepository, times(4)).getStructureInfo();
   }
 
   /**
@@ -179,6 +191,7 @@ public class StructureServiceTest {
     Assert.assertEquals((Double) 0.0, structureService.getStructureHeating(-4));
     Assert.assertEquals((Double) 0.0, structureService.getStructureHeating(0));
     Assert.assertEquals((Double) 0.0, structureService.getStructureHeating(31));
+    verify(structureRepository, times(3)).getStructureInfo();
   }
 
   /**
@@ -189,6 +202,7 @@ public class StructureServiceTest {
     Assert.assertEquals(0.2172696, structureService.getStructureHeatingPerCube(1), 0.005);
     Assert.assertEquals(0.2182888, structureService.getStructureHeatingPerCube(5), 0.005);
     Assert.assertEquals(0.2490995, structureService.getStructureHeatingPerCube(7), 0.005);
+    verify(structureRepository, times(6)).getStructureInfo();
   }
 
   /**
@@ -198,6 +212,7 @@ public class StructureServiceTest {
   public void getStructureHeatingPerCubeForNotExistingStructuresTest() {
     Assert.assertEquals((Double) 0.0, structureService.getStructureHeatingPerCube(-1));
     Assert.assertEquals(0.0, structureService.getStructureHeatingPerCube(0), 0.005);
+    verify(structureRepository, times(4)).getStructureInfo();
   }
 
   /**
@@ -208,6 +223,7 @@ public class StructureServiceTest {
     Assert.assertEquals(2.445789586, structureService.getStructureLightPerArea(1), 0.005);
     Assert.assertEquals(1.668346532, structureService.getStructureLightPerArea(5), 0.005);
     Assert.assertEquals((Double) 3.790659964, structureService.getStructureLightPerArea(3), 0.005);
+    verify(structureRepository, times(6)).getStructureInfo();
   }
 
   /**
@@ -218,6 +234,7 @@ public class StructureServiceTest {
     Assert.assertEquals((Double) 0.0, structureService.getStructureLightPerArea(-4));
     Assert.assertEquals(0.0, structureService.getStructureLightPerArea(0), 0.005);
     Assert.assertEquals((Double) 0.0, structureService.getStructureLightPerArea(8));
+    verify(structureRepository, times(6)).getStructureInfo();
   }
 
   /**
@@ -228,6 +245,7 @@ public class StructureServiceTest {
     Assert.assertEquals(0.0, structureService.getMaintenanceCost(5, 0.0), 0.005);
     Assert.assertEquals(220.9922, structureService.getMaintenanceCost(6, 1.43), 0.005);
     Assert.assertEquals(750.816, structureService.getMaintenanceCost(5, 2.70), 0.005);
+    verify(structureRepository, times(3)).getStructureInfo();
   }
 
   /**
@@ -237,6 +255,7 @@ public class StructureServiceTest {
   public void getMaintenanceCostForNotExistingStructuresTest() {
     Assert.assertEquals(0.0, structureService.getMaintenanceCost(-3, 1.20), 0.005);
     Assert.assertEquals(0.0, structureService.getMaintenanceCost(0, 1.50), 0.005);
+    verify(structureRepository, times(2)).getStructureInfo();
   }
 
   /**
@@ -246,6 +265,7 @@ public class StructureServiceTest {
   public void getMaintenanceCostForNotExistingStructuresWithNullPriceTest() {
     Assert.assertEquals(0.0, structureService.getMaintenanceCost(-3, null), 0.005);
     Assert.assertEquals(0.0, structureService.getMaintenanceCost(0, null), 0.005);
+    verify(structureRepository, times(2)).getStructureInfo();
   }
 
   /**
@@ -257,5 +277,6 @@ public class StructureServiceTest {
     Assert.assertEquals((Double) 0.0, structureService.getMaintenanceCost(6, null));
     Assert.assertEquals((Double) 0.0, structureService.getMaintenanceCost(5, null));
     Assert.assertEquals((Double) 0.0, structureService.getMaintenanceCost(1, null));
+    verify(structureRepository, times(4)).getStructureInfo();
   }
 }
