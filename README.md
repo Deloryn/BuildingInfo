@@ -6,7 +6,7 @@ This is a team project for my software engineering classes at my university. The
 
 # Technologies & Software Engineering Principles
 - Gson
-- JUni4
+- JUnit4
 - Mockito
 - UML modeling
 - CI: Travis
