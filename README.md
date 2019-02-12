@@ -12,7 +12,7 @@ This is a team project for my software engineering classes at my university. The
 - CI: Travis
 - design patterns: composite
 
-Data structure:
+# Data structure
 - Location is a building, a floor or a room
 - A building can consist of floors and those can consist of rooms
 - Each location is characterized by:
